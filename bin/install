@@ -10,6 +10,7 @@ $commands       = array(
     'gem install capistrano'                                                            => !filter_var(`gem list capistrano -i`, FILTER_VALIDATE_BOOLEAN),
     'gem install capistrano-php'                                                        => !filter_var(`gem list capistrano-php -i`, FILTER_VALIDATE_BOOLEAN),
     'gem install capistrano-ext'                                                        => !filter_var(`gem list capistrano-ext -i`, FILTER_VALIDATE_BOOLEAN),
+    'gem install railsless-deploy'                                                      => !filter_var(`gem list railsless-deploy -i`, FILTER_VALIDATE_BOOLEAN),
 );
 
 chdir($root);

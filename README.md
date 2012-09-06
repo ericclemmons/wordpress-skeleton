@@ -17,7 +17,9 @@ Geting Started
 
 5. Start your development environment via `cap develop deploy`.
 
-6. **Done**!  Open <http://wordpress-skeleton.dev/> in your browser and make changes to your theme in `/src`!
+6. **Done**!
+
+Open <http://wordpress-skeleton.dev/> in your browser, make changes to your theme in `/src` & refresh!
 
 
 Deploying

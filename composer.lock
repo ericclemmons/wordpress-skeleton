@@ -5,7 +5,7 @@
             "package": "wordpress/wordpress",
             "version": "master",
             "source-reference": "master",
-            "commit-date": "1346938533"
+            "commit-date": "1346959196"
         }
     ],
     "packages-dev": [
