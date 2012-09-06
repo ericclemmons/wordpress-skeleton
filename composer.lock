@@ -1,0 +1,62 @@
+{
+    "hash": "ad80491cf91a500601d6d6086622bebe",
+    "packages": [
+        {
+            "package": "wordpress/wordpress",
+            "version": "master",
+            "source-reference": "master",
+            "commit-date": "1346938533"
+        }
+    ],
+    "packages-dev": [
+        {
+            "package": "automattic/_s",
+            "version": "master",
+            "source-reference": "master",
+            "commit-date": "1346394020"
+        },
+        {
+            "package": "cookbooks/apache2",
+            "version": "master",
+            "source-reference": "master",
+            "commit-date": "1345305048"
+        },
+        {
+            "package": "cookbooks/apt",
+            "version": "master",
+            "source-reference": "master",
+            "commit-date": "1346429806"
+        },
+        {
+            "package": "cookbooks/mysql",
+            "version": "master",
+            "source-reference": "master",
+            "commit-date": "1345305110"
+        },
+        {
+            "package": "cookbooks/openssl",
+            "version": "master",
+            "source-reference": "master",
+            "commit-date": "1331206930"
+        },
+        {
+            "package": "cookbooks/php",
+            "version": "master",
+            "source-reference": "master",
+            "commit-date": "1346384264"
+        }
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "wordpress/wordpress": 20,
+        "automattic/_s": 20,
+        "cookbooks/apache2": 20,
+        "cookbooks/apt": 20,
+        "cookbooks/mysql": 20,
+        "cookbooks/openssl": 20,
+        "cookbooks/php": 20
+    }
+}

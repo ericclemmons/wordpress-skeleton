@@ -1,0 +1,121 @@
+{
+    "name":                         "ericclemmons/wordpress-skeleton",
+
+    "description":                  "WordPress skeleton utilizing Vagrant, Composer, _s, & Wordpress.",
+
+    "authors": [
+        {
+            "name":                 "Eric Clemmons",
+            "email":                "eric@smarterspam.com"
+        }
+    ],
+
+    "autoload": {
+        "psr-0": {
+            "":                     "src/"
+        }
+    },
+
+    "require": {
+        "wordpress/wordpress":      "dev-master"
+    },
+
+    "require-dev": {
+        "automattic/_s":            "dev-master",
+        "cookbooks/apache2":        "dev-master",
+        "cookbooks/apt":            "dev-master",
+        "cookbooks/mysql":          "dev-master",
+        "cookbooks/openssl":        "dev-master",
+        "cookbooks/php":            "dev-master"
+    },
+
+    "repositories": [
+        {
+            "packagist":            false
+        },
+        {
+            "type":                 "package",
+            "package": {
+                "name":             "automattic/_s",
+                "version":          "master",
+                "source": {
+                    "url":          "git://github.com/Automattic/_s.git",
+                    "type":         "git",
+                    "reference":    "master"
+                }
+            }
+        },
+        {
+            "type":                 "package",
+            "package": {
+                "name":             "cookbooks/apache2",
+                "version":          "master",
+                "source": {
+                    "url":          "git://github.com/opscode-cookbooks/apache2.git",
+                    "type":         "git",
+                    "reference":    "master"
+                }
+            }
+        },
+        {
+            "type":                 "package",
+            "package": {
+                "name":             "cookbooks/apt",
+                "version":          "master",
+                "source": {
+                    "url":          "git://github.com/opscode-cookbooks/apt.git",
+                    "type":         "git",
+                    "reference":    "master"
+                }
+            }
+        },
+        {
+            "type":                 "package",
+            "package": {
+                "name":             "cookbooks/mysql",
+                "version":          "master",
+                "source": {
+                    "url":          "git://github.com/opscode-cookbooks/mysql.git",
+                    "type":         "git",
+                    "reference":    "master"
+                }
+            }
+        },
+        {
+            "type":                 "package",
+            "package": {
+                "name":             "cookbooks/openssl",
+                "version":          "master",
+                "source": {
+                    "url":          "git://github.com/opscode-cookbooks/openssl.git",
+                    "type":         "git",
+                    "reference":    "master"
+                }
+            }
+        },
+        {
+            "type":                 "package",
+            "package": {
+                "name":             "cookbooks/php",
+                "version":          "master",
+                "source": {
+                    "url":          "git://github.com/opscode-cookbooks/php.git",
+                    "type":         "git",
+                    "reference":    "master"
+                }
+            }
+        },
+        {
+            "type":                 "package",
+            "package": {
+                "name":             "wordpress/wordpress",
+                "version":          "master",
+                "source": {
+                    "url":          "git://github.com/WordPress/WordPress.git",
+                    "type":         "git",
+                    "reference":    "master"
+                }
+            }
+        }
+    ]
+}
