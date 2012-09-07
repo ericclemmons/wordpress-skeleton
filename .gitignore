@@ -1,4 +1,6 @@
 .vagrant
 composer.phar
+config/deploy*
+Vagrantfile
 vendor
 web

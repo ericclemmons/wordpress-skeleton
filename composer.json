@@ -12,11 +12,12 @@
 
     "autoload": {
         "psr-0": {
-            "":                     "src/"
+            "Skeleton":             "src/"
         }
     },
 
     "require": {
+        "php":                      ">=5.3.3",
         "wordpress/wordpress":      "dev-master"
     },
 
@@ -26,7 +27,9 @@
         "cookbooks/apt":            "dev-master",
         "cookbooks/mysql":          "dev-master",
         "cookbooks/openssl":        "dev-master",
-        "cookbooks/php":            "dev-master"
+        "cookbooks/php":            "dev-master",
+        "symfony/console":          "dev-master",
+        "weierophinney/phly_mustache": "dev-master"
     },
 
     "repositories": [
@@ -108,12 +111,45 @@
         {
             "type":                 "package",
             "package": {
+                "name":             "symfony/console",
+                "version":          "master",
+                "source": {
+                    "url":          "git://github.com/symfony/Console.git",
+                    "type":         "git",
+                    "reference":    "master"
+                },
+                "target-dir":       "Symfony/Component/Console",
+                "autoload": {
+                    "psr-0":        { "Symfony\\Component\\Console": "" }
+                }
+            }
+        },
+        {
+            "type":                 "package",
+            "package": {
                 "name":             "wordpress/wordpress",
                 "version":          "master",
                 "source": {
                     "url":          "git://github.com/WordPress/WordPress.git",
                     "type":         "git",
                     "reference":    "master"
+                }
+            }
+        },
+        {
+            "type":                 "package",
+            "package": {
+                "name":             "weierophinney/phly_mustache",
+                "version":          "master",
+                "source": {
+                    "url":          "git://github.com/weierophinney/phly_mustache.git",
+                    "type":         "git",
+                    "reference":    "master"
+                },
+                "autoload": {
+                    "psr-0": {
+                        "Phly": "library/"
+                    }
                 }
             }
         }

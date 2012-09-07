@@ -1,5 +1,5 @@
 {
-    "hash": "ad80491cf91a500601d6d6086622bebe",
+    "hash": "62e8c4413a66162ee4d2f2427561ce01",
     "packages": [
         {
             "package": "wordpress/wordpress",
@@ -44,6 +44,18 @@
             "version": "master",
             "source-reference": "master",
             "commit-date": "1346384264"
+        },
+        {
+            "package": "symfony/console",
+            "version": "master",
+            "source-reference": "master",
+            "commit-date": "1346957130"
+        },
+        {
+            "package": "weierophinney/phly_mustache",
+            "version": "master",
+            "source-reference": "master",
+            "commit-date": "1343915507"
         }
     ],
     "aliases": [
@@ -57,6 +69,8 @@
         "cookbooks/apt": 20,
         "cookbooks/mysql": 20,
         "cookbooks/openssl": 20,
-        "cookbooks/php": 20
+        "cookbooks/php": 20,
+        "symfony/console": 20,
+        "weierophinney/phly_mustache": 20
     }
 }
