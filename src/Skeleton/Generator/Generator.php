@@ -47,20 +47,34 @@ class Generator
      */
     public function generateSkeleton(array $context = array())
     {
-        $files = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator($this->source, \RecursiveDirectoryIterator::SKIP_DOTS)
-        );
+        $files      = new \RecursiveDirectoryIterator($this->source, \RecursiveDirectoryIterator::SKIP_DOTS | \RecursiveDirectoryIterator::FOLLOW_SYMLINKS);
+        $filtered   = new \RecursiveCallbackFilterIterator($files, function($file, $path, $iterator) {
+            if ($file->getBasename() === '.git') {
+                return false;
+            }
+
+            return true;
+        });
 
         $generated = array();
 
-        foreach ($files as $path => $file) {
+        foreach (new \RecursiveIteratorIterator($filtered) as $path => $file) {
             $template = str_replace(array($this->source.'/', '.mustache'), null, $path);
-            $contents = $this->generateTemplate($template, $context);
+
+            if ($file->getExtension() === 'mustache') {
+                $contents = $this->generateTemplate($template, $context);
+            } else {
+                $contents = file_get_contents($path);
+            }
 
             $target     = sprintf('%s/%s', $this->destination, $template);
-            $success    = file_put_contents($target, $contents);
+            $parentDir  = dirname($target);
 
-            if (!$success) {
+            if (!is_dir($parentDir) && !mkdir($parentDir, 0775)) {
+                throw new \Exception('Unable to create directory '.$parentDir);
+            }
+
+            if (!file_put_contents($target, $contents)) {
                 throw new \Exception('Unable to write to '.$target);
             }
 
