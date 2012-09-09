@@ -1,11 +1,11 @@
 {
-    "hash": "62e8c4413a66162ee4d2f2427561ce01",
+    "hash": "9741d1d606a88692db15f3d4b2aef210",
     "packages": [
         {
             "package": "wordpress/wordpress",
             "version": "master",
             "source-reference": "master",
-            "commit-date": "1346959196"
+            "commit-date": "1347080314"
         }
     ],
     "packages-dev": [

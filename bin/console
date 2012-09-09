@@ -4,8 +4,7 @@
 use Skeleton\Command as Skeleton;
 use Symfony\Component\Console\Application;
 
-$loader = require __DIR__.'/../vendor/autoload.php';
-$loader->add('Skeleton', __DIR__.'/../src');
+require __DIR__.'/../vendor/autoload.php';
 
 $console = new Application('WordPress Skeleton', '0.1');
 $console->addCommands(array(
