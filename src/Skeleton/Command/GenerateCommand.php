@@ -39,10 +39,21 @@ class GenerateCommand extends Command
         $domain     = Validators::validateDomain($input->getOption('domain'));
         $ipAddress  = Validators::validateIpAddress($input->getOption('ip-address'));
 
-        $this->generator->generateSkeleton(array(
-            'domain'        => $domain,
-            'ip_address'    => $ipAddress
+        $output->writeln('Generating...');
+
+        $generated  = $this->generator->generateSkeleton(array(
+            'domain'            => $domain,
+            'ip_address'        => $ipAddress,
+            'wordpress'         => array(
+                'config'        => array(
+                    'salts'     => file_get_contents('https://api.wordpress.org/secret-key/1.1/salt/'),
+                ),
+            ),
         ));
+
+        foreach ($generated as $file) {
+            $output->writeln(sprintf("\tGenerated <info>%s</info>", $file));
+        }
     }
 
     protected function interact(InputInterface $input, OutputInterface $output)
@@ -77,6 +88,8 @@ class GenerateCommand extends Command
         );
 
         $input->setOption('ip-address', $ipAddress);
+
+        $output->writeln('');
     }
 
     protected function getDialogHelper()

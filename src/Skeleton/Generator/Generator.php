@@ -51,6 +51,8 @@ class Generator
             new \RecursiveDirectoryIterator($this->source, \RecursiveDirectoryIterator::SKIP_DOTS)
         );
 
+        $generated = array();
+
         foreach ($files as $path => $file) {
             $template = str_replace(array($this->source.'/', '.mustache'), null, $path);
             $contents = $this->generateTemplate($template, $context);
@@ -61,7 +63,11 @@ class Generator
             if (!$success) {
                 throw new \Exception('Unable to write to '.$target);
             }
+
+            $generated[] = $target;
         }
+
+        return $generated;
     }
 
     public function generateTemplate($template, array $context = array())
