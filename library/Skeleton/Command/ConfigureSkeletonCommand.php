@@ -3,30 +3,18 @@
 namespace Skeleton\Command;
 
 use Skeleton\Console\Helper\DialogHelper;
-use Skeleton\Generator\Generator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Yaml\Yaml;
 
-class GenerateCommand extends Command
+class ConfigureSkeletonCommand extends Command
 {
-    private $generator;
-
-    public function __construct($name = null)
-    {
-        parent::__construct($name);
-
-        $source         = Validators::validatePath(__DIR__.'/../Resources/skeleton');
-        $destination    = Validators::validatePath(__DIR__.'/../../../');
-
-        $this->generator = new Generator($source, $destination);
-    }
-
     protected function configure()
     {
         $this
-            ->setDescription('Generates WordPress skeleton based on domain name')
+            ->setDescription('Configures skeleton for development & deployment')
             ->setDefinition(array(
                 new InputOption('domain', '', InputOption::VALUE_REQUIRED, 'The destination domain for this theme'),
                 new InputOption('ip-address', '', InputOption::VALUE_REQUIRED, 'The local development IP address (cannot b'),
@@ -39,20 +27,46 @@ class GenerateCommand extends Command
         $domain     = Validators::validateDomain($input->getOption('domain'));
         $ipAddress  = Validators::validateIpAddress($input->getOption('ip-address'));
 
-        $output->writeln('Generating...');
+        $output->writeln('Configuring...');
 
-        $generated  = $this->generator->generateSkeleton(array(
-            'domain'            => $domain,
-            'ip_address'        => $ipAddress,
-            'wordpress'         => array(
-                'config'        => array(
-                    'salts'     => file_get_contents('https://api.wordpress.org/secret-key/1.1/salt/'),
+        $config = array(
+            'name'                  => $domain,
+            'deploy'                => array(
+                'develop'           => array(
+                    'web'           => array(
+                        'name'      => sprintf('vagrant.%s', $domain),
+                        'host'      => $ipAddress,
+                        'user'      => 'vagrant',
+                        'password'  => 'vagrant',
+                    ),
+                    'db'            => array(
+                        'user'      => 'root',
+                        'password'  => 'vagrant',
+                    ),
                 ),
             ),
-        ));
+            'wordpress'             => array(
+                'salts'             => file_get_contents('https://api.wordpress.org/secret-key/1.1/salt/'),
+                'develop'           => array(
+                    'db'                => array(
+                        'name'          => 'wordpress',
+                        'host'          => 'localhost',
+                        'user'          => 'vagrant',
+                        'password'      => 'vagrant',
+                    ),
+                ),
+            ),
+        );
 
-        foreach ($generated as $file) {
-            $output->writeln(sprintf("\tGenerated <info>%s</info>", $file));
+        $yaml   = Yaml::dump($config, 8);
+        $path   = realpath(__DIR__.'/../../../config').'/skeleton.yml';
+
+        if (file_put_contents($path, $yaml)) {
+            $output->writeln(sprintf("\tGenerated <info>%s</info>", $path));
+        } else {
+            $output->writeln(sprintf('\t<error>Unable to write %s</error>', $path));
+
+            return 1;
         }
     }
 
@@ -60,7 +74,7 @@ class GenerateCommand extends Command
     {
         $dialog = $this->getDialogHelper();
 
-        $dialog->writeSection($output, 'Welcome to the WordPress Skeleton Installer!');
+        $dialog->writeSection($output, 'Welcome to the WordPress Skeleton Configurator!');
 
         /**
          * Domain

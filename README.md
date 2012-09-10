@@ -9,17 +9,19 @@ Geting Started
 
 1. Download & Install [Vagrant][1]
 
-2. Install Dependencies via `./bin/install`.  This will install [Vagrant Hostmaster][6], [Composer][2], [WordPress][5] & any other dependencies.
+2. Install Dependencies via `./bin/install`.  This will install [Vagrant Hostmaster][6], [Composer][2], [WordPress][5] & other dependencies.
 
-3. Start the development VM via `vagrant up`.  This will also install the [WordPress Theme Unit Test][8].
+3. Setup your skeleton via `./bin/console skeleton:generate` & follw the prompts.
 
-4. Create the deployment structure via `cap develop deploy:setup`.
+4. Start the development VM via `vagrant up`.
 
-5. Start your development environment via `cap develop deploy`.
+5. Create the deployment structure via `cap develop deploy:setup`.
 
-6. **Done**!
+6. Start your development environment via `cap develop deploy`.
 
-Open <http://wordpress-skeleton.dev/> in your browser, make changes to your theme in `/src` & refresh!
+7. **Done**!
+
+Open <http://vagrant.[domain]/> in your browser, make changes to your theme in `/src` & refresh!
 
 
 Deploying

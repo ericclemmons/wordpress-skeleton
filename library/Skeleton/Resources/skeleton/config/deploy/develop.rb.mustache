@@ -1,4 +1,4 @@
-role :server,       "wordpress-skeleton.dev"
+role :server,       "{{deploy.develop.web.host}}"
 
 set :copy_strategy, :export
 set :copy_exclude,  [".git"]
@@ -11,8 +11,8 @@ set :repository,    File.expand_path(File.dirname(__FILE__) + "/../../")
 set :scm,           :none
 set :use_sudo,      true
 
-set :user,          "vagrant"
-set :password,      "vagrant"
+set :user,          "{{deploy.develop.web.user}}"
+set :password,      "{{deploy.develop.web.password}}"
 
 default_run_options[:pty] = true
 

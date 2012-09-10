@@ -8,6 +8,8 @@ require __DIR__.'/../vendor/autoload.php';
 
 $console = new Application('WordPress Skeleton', '0.1');
 $console->addCommands(array(
-    new Skeleton\GenerateCommand('generate'),
+    new Skeleton\ConfigureSkeletonCommand('skeleton:configure'),
+    new Skeleton\GenerateSkeletonCommand('skeleton:generate'),
+    new Skeleton\InstallWordPressCommand('wordpress:install'),
 ));
 $console->run();

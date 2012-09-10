@@ -29,6 +29,7 @@
         "cookbooks/openssl":        "dev-master",
         "cookbooks/php":            "dev-master",
         "symfony/console":          "dev-master",
+        "symfony/yaml":             "dev-master",
         "weierophinney/phly_mustache": "dev-master"
     },
 
@@ -121,6 +122,22 @@
                 "target-dir":       "Symfony/Component/Console",
                 "autoload": {
                     "psr-0":        { "Symfony\\Component\\Console": "" }
+                }
+            }
+        },
+        {
+            "type":                 "package",
+            "package": {
+                "name":             "symfony/yaml",
+                "version":          "master",
+                "source": {
+                    "url":          "git://github.com/symfony/Yaml.git",
+                    "type":         "git",
+                    "reference":    "master"
+                },
+                "target-dir":       "Symfony/Component/Yaml",
+                "autoload": {
+                    "psr-0":        { "Symfony\\Component\\Yaml": "" }
                 }
             }
         },

@@ -1,7 +1,4 @@
 /.vagrant
 /composer.phar
-/config/deploy*
-/src
-/Vagrantfile
 /vendor
 /web

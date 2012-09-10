@@ -1,6 +1,10 @@
 require "capistrano/php"
 require "capistrano/ext/multistage"
 require "railsless-deploy"
+require "yaml"
+
+# WordPress Skeleton config
+set :skeleton,      YAML.load_file(File.dirname(__FILE__) + "/skeleton.yml")
 
 set :stage_dir,     "deploy"
-set :application,   "{{domain}}"
+set :application,   "{{name}}"
