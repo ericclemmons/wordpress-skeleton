@@ -39,6 +39,11 @@ namespace :wordpress do
     end
 
     namespace :theme do
+        desc "Activates theme"
+        task :activate do
+            run "#{latest_release}/bin/console wordpress:theme:activate --env=#{stage}"
+        end
+
         desc "Symlinks theme into themes directory"
         task :symlink do
             set :theme_dir, Pathname.new("#{release_path}/vendor/wordpress/wordpress/wp-content/themes")

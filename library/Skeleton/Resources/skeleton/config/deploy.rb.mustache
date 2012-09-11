@@ -14,7 +14,12 @@ after "deploy:setup" do
 end
 
 after "deploy:update_code" do
-    set :config_dir,    "#{latest_release}/config"
+    set :wordpress_dir, "#{release_path}/vendor/wordpress/wordpress"
+    set :web_dir,       "#{release_path}/web"
+    set :config_path,   "#{latest_release}/web/wp-config.php"
 
-    run "#{try_sudo} ln -s #{config_dir}/deploy/wp-config-#{stage}.php #{latest_release}/web/wp-config.php"
+    run "rm -f #{web_dir} && ln -s  #{wordpress_dir} #{web_dir}"
+    run "rm -f #{config_path} && ln -s #{release_path}/config/deploy/wp-config-#{stage}.php #{config_path}"
 end
+
+after "deploy:update", "wordpress:theme:activate"

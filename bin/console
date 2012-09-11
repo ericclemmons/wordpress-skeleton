@@ -15,6 +15,7 @@ $commands   = array(
     new Command\GenerateSkeletonCommand('skeleton:generate'),
     new Command\CreateDatabaseWordPressCommand('wordpress:db:create'),
     new Command\DropDatabaseWordPressCommand('wordpress:db:drop'),
+    new Command\ActivateThemeWordPressCommand('wordpress:theme:activate'),
     new Command\InstallWordPressCommand('wordpress:install'),
 );
 
