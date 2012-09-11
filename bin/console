@@ -10,6 +10,8 @@ $console = new Application('WordPress Skeleton', '0.1');
 $console->addCommands(array(
     new Skeleton\ConfigureSkeletonCommand('skeleton:configure'),
     new Skeleton\GenerateSkeletonCommand('skeleton:generate'),
+    new Skeleton\CreateDatabaseWordPressCommand('wordpress:db:create'),
+    new Skeleton\DropDatabaseWordPressCommand('wordpress:db:drop'),
     new Skeleton\InstallWordPressCommand('wordpress:install'),
 ));
 $console->run();

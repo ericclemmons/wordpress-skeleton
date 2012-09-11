@@ -20,12 +20,12 @@ after "deploy:update", "deploy:theme"
 
 namespace :deploy do
     task :symlink do
-        try_sudo "rm -f #{current_path}"
-        try_sudo "ln -s /vagrant #{current_path}"
+        try_sudo "rm -f #{release_path}"
+        try_sudo "ln -s /vagrant #{release_path}"
     end
 
     task :theme do
-        run "ln -s #{current_path}/src #{current_path}/vendor/wordpress/wordpress/wp-content/themes/#{application}"
+        run "ln -s #{release_path}/src #{release_path}/vendor/wordpress/wordpress/wp-content/themes/#{application}"
     end
 
     task :update_code do
