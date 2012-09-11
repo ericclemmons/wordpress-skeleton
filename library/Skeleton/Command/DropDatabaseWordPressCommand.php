@@ -10,12 +10,12 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Yaml;
 
-class DropDatabaseWordpressCommand extends Command
+class DropDatabaseWordpressCommand extends SkeletonCommand
 {
     protected function configure()
     {
         $this
-            ->setDescription('Drops database according to specified environment')
+            ->setDescription('Drops database for specified environment')
             ->setDefinition(array(
                 new InputOption('env', '', InputOption::VALUE_REQUIRED, 'Environment to use settings for')
             ))

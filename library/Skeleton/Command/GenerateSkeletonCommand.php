@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Yaml;
 
-class GenerateSkeletonCommand extends Command
+class GenerateSkeletonCommand extends SkeletonCommand
 {
     private $generator;
 

@@ -1,10 +1,10 @@
 Vagrant::Config.run do |config|
   config.vm.box       = "lucid32"
   config.vm.box_url   = "http://files.vagrantup.com/lucid32.box"
-  config.vm.host_name = "{{deploy.develop.web.name}}"
+  config.vm.host_name = "{{deploy.develop.web.host}}"
 
   # Dedicated IP to avoid conflicts (and no port fowarding!)
-  config.vm.network :hostonly, "{{deploy.develop.web.host}}"
+  config.vm.network :hostonly, "{{deploy.develop.web.ip}}"
 
   # Mount the src folder as NFS for caching & speed
   config.vm.share_folder("v-root", "/vagrant", ".", :nfs => true)

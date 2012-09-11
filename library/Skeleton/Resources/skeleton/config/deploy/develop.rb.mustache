@@ -1,18 +1,20 @@
-role :server,       "{{deploy.develop.web.host}}"
+role :server,               "{{deploy.develop.web.host}}"
 
-set :copy_strategy, :export
-set :copy_exclude,  [".git"]
+set :copy_strategy,         :export
+set :copy_exclude,          [".git"]
 
-set :deploy_to,     "/var/www/#{application}"
-set :deploy_via,    :copy
+set :deploy_to,             "/var/www/#{application}"
+set :deploy_via,            :copy
 
-set :repository,    File.expand_path(File.dirname(__FILE__) + "/../../")
+set :repository,            File.expand_path(File.dirname(__FILE__) + "/../../")
 
-set :scm,           :none
-set :use_sudo,      true
+set :scm,                   :none
+set :use_sudo,              true
 
-set :user,          "{{deploy.develop.web.user}}"
-set :password,      "{{deploy.develop.web.password}}"
+set :user,                  "{{deploy.develop.web.user}}"
+set :password,              "{{deploy.develop.web.password}}"
+
+set :group_writable,        true
 
 default_run_options[:pty] = true
 

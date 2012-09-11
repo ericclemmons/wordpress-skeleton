@@ -1,17 +1,28 @@
 #!/usr/bin/env php
 <?php
 
-use Skeleton\Command as Skeleton;
+use Skeleton\Command as Command;
+use Skeleton\Skeleton;
+use Skeleton\SkeletonAwareInterface;
 use Symfony\Component\Console\Application;
 
 require __DIR__.'/../vendor/autoload.php';
 
-$console = new Application('WordPress Skeleton', '0.1');
-$console->addCommands(array(
-    new Skeleton\ConfigureSkeletonCommand('skeleton:configure'),
-    new Skeleton\GenerateSkeletonCommand('skeleton:generate'),
-    new Skeleton\CreateDatabaseWordPressCommand('wordpress:db:create'),
-    new Skeleton\DropDatabaseWordPressCommand('wordpress:db:drop'),
-    new Skeleton\InstallWordPressCommand('wordpress:install'),
-));
+$console    = new Application('WordPress Skeleton', '0.1');
+$skeleton   = new Skeleton(__DIR__.'/../config/skeleton.yml');
+$commands   = array(
+    new Command\ConfigureSkeletonCommand('skeleton:configure'),
+    new Command\GenerateSkeletonCommand('skeleton:generate'),
+    new Command\CreateDatabaseWordPressCommand('wordpress:db:create'),
+    new Command\DropDatabaseWordPressCommand('wordpress:db:drop'),
+    new Command\InstallWordPressCommand('wordpress:install'),
+);
+
+foreach ($commands as $command) {
+    if ($command instanceof SkeletonAwareInterface) {
+        $command->setSkeleton($skeleton);
+    }
+}
+
+$console->addCommands($commands);
 $console->run();

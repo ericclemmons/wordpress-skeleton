@@ -9,7 +9,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Yaml;
 
-class ConfigureSkeletonCommand extends Command
+class ConfigureSkeletonCommand extends SkeletonCommand
 {
     protected function configure()
     {
@@ -34,8 +34,8 @@ class ConfigureSkeletonCommand extends Command
             'deploy'                => array(
                 'develop'           => array(
                     'web'           => array(
-                        'name'      => sprintf('vagrant.%s', $domain),
-                        'host'      => $ipAddress,
+                        'host'      => sprintf('vagrant.%s', $domain),
+                        'ip'        => $ipAddress,
                         'user'      => 'vagrant',
                         'password'  => 'vagrant',
                     ),

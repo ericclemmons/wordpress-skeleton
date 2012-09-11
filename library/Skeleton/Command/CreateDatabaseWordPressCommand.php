@@ -10,12 +10,12 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Yaml;
 
-class CreateDatabaseWordpressCommand extends Command
+class CreateDatabaseWordpressCommand extends SkeletonCommand
 {
     protected function configure()
     {
         $this
-            ->setDescription('Creates database specified in wp-config.php')
+            ->setDescription('Creates database for specified environment')
             ->setDefinition(array(
                 new InputOption('env', '', InputOption::VALUE_REQUIRED, 'Environment to use settings for')
             ))
