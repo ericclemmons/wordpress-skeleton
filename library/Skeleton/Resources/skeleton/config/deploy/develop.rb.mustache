@@ -16,19 +16,12 @@ set :password,      "{{deploy.develop.web.password}}"
 
 default_run_options[:pty] = true
 
-after "deploy:update", "deploy:theme"
+after "deploy:update", "wordpress:theme:symlink"
 
 namespace :deploy do
-    task :symlink do
-        try_sudo "rm -f #{release_path}"
-        try_sudo "ln -s /vagrant #{release_path}"
-    end
-
-    task :theme do
-        run "ln -s #{release_path}/src #{release_path}/vendor/wordpress/wordpress/wp-content/themes/#{application}"
-    end
-
     task :update_code do
         logger.important "`deploy:update_code` skipped because folder is mounted"
+        run "#{try_sudo} ln -s /vagrant #{release_path}"
+        finalize_update
     end
 end

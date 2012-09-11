@@ -59,14 +59,19 @@ class ConfigureSkeletonCommand extends Command
         );
 
         $yaml   = Yaml::dump($config, 8);
-        $path   = realpath(__DIR__.'/../../../config').'/skeleton.yml';
+        $path   = __DIR__.'/../../../config/skeleton.yml';
+        $dir    = dirname($path);
+
+        if (!is_dir($dir) && !mkdir($dir, 0775)) {
+            throw new \Exception('Unable to create folder '.$dir);
+        }
+
+        $path = realpath($path);
 
         if (file_put_contents($path, $yaml)) {
             $output->writeln(sprintf("\tGenerated <info>%s</info>", $path));
         } else {
-            $output->writeln(sprintf('\t<error>Unable to write %s</error>', $path));
-
-            return 1;
+            throw new \Exception('Unable to write '.$path);
         }
     }
 

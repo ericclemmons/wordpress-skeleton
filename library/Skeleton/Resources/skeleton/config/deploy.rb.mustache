@@ -8,3 +8,7 @@ set :skeleton,      YAML.load_file(File.dirname(__FILE__) + "/skeleton.yml")
 
 set :stage_dir,     "deploy"
 set :application,   "{{name}}"
+
+after "deploy:setup" do
+    run "#{try_sudo} chown #{user} #{deploy_to}"
+end
