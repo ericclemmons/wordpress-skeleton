@@ -21,5 +21,3 @@ after "deploy:update_code" do
     run "rm -f #{web_dir} && ln -s  #{wordpress_dir} #{web_dir}"
     run "rm -f #{config_path} && ln -s #{release_path}/config/deploy/wp-config-#{stage}.php #{config_path}"
 end
-
-after "deploy:update", "wordpress:theme:activate"

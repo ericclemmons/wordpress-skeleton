@@ -17,15 +17,15 @@ class ConfigureSkeletonCommand extends SkeletonCommand
             ->setDescription('Configures skeleton for development & deployment')
             ->setDefinition(array(
                 new InputOption('domain', '', InputOption::VALUE_REQUIRED, 'The destination domain for this theme'),
-                new InputOption('ip-address', '', InputOption::VALUE_REQUIRED, 'The local development IP address (cannot b'),
+                new InputOption('ip', '', InputOption::VALUE_REQUIRED, 'The local development IP address (cannot b'),
             ))
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $domain     = Validators::validateDomain($input->getOption('domain'));
-        $ipAddress  = Validators::validateIpAddress($input->getOption('ip-address'));
+        $domain = Validators::validateDomain($input->getOption('domain'));
+        $ip     = Validators::validateIp($input->getOption('ip'));
 
         $output->writeln('Configuring...');
 
@@ -35,7 +35,7 @@ class ConfigureSkeletonCommand extends SkeletonCommand
                 'develop'           => array(
                     'web'           => array(
                         'host'      => sprintf('vagrant.%s', $domain),
-                        'ip'        => $ipAddress,
+                        'ip'        => $ip,
                         'user'      => 'vagrant',
                         'password'  => 'vagrant',
                     ),
@@ -58,17 +58,9 @@ class ConfigureSkeletonCommand extends SkeletonCommand
             ),
         );
 
-        $yaml   = Yaml::dump($config, 8);
-        $path   = __DIR__.'/../../../config/skeleton.yml';
-        $dir    = dirname($path);
+        $path = $this->skeleton->getConfigPath();
 
-        if (!is_dir($dir) && !mkdir($dir, 0775)) {
-            throw new \Exception('Unable to create folder '.$dir);
-        }
-
-        $path = realpath($path);
-
-        if (file_put_contents($path, $yaml)) {
+        if ($this->skeleton->writeConfig($config)) {
             $output->writeln(sprintf("\tGenerated <info>%s</info>", $path));
         } else {
             throw new \Exception('Unable to write '.$path);
@@ -97,16 +89,16 @@ class ConfigureSkeletonCommand extends SkeletonCommand
         /**
          * IP Address
          */
-        $defaultIp = $input->getOption('ip-address') ?: $this->generator->generateIpAddress();
-        $ipAddress = $dialog->askAndValidate(
+        $defaultIp  = $input->getOption('ip') ?: $this->skeleton->getGenerator()->generateIp();
+        $ip         = $dialog->askAndValidate(
             $output,
             $dialog->getQuestion('(Optional) Specify the internal Vagrant IP address', $defaultIp),
-            array('Skeleton\Command\Validators', 'validateIpAddress'),
+            array('Skeleton\Command\Validators', 'validateIp'),
             false,
             $defaultIp
         );
 
-        $input->setOption('ip-address', $ipAddress);
+        $input->setOption('ip', $ip);
 
         $output->writeln('');
     }

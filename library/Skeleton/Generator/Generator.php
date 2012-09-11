@@ -21,7 +21,7 @@ class Generator
         $this->mustache->setTemplatePath($this->source);
     }
 
-    public function generateIpAddress()
+    public function generateIp()
     {
         $blocks = array(
             array('10.0.0.0', '10.255.255.255'),

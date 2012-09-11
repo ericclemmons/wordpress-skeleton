@@ -9,6 +9,7 @@ Dependencies
 
 1. Download & Install [Vagrant][1]
 
+
 Geting Started
 --------------
 
@@ -21,22 +22,26 @@ Configure & generate the skeleton:
     ./bin/console skeleton:configure
     ./bin/console skeleton:generate
 
-Deployment
-----------
-
-You can specify other environments like `staging` and `production`, if you have those setup.
-
-    cap develop deploy:setup            # First time setup of remote folder structure
-    cap develop deploy                  # Setups up WordPress configs & themes
-    cap develop wordpress:db:create     # First time creation of database
-    cap develop wordpress:install       # First time initialization of database & admin user
 
 Local Development
 -----------------
 
     vagrant up
 
-Open <http://vagrant.[domain]/> in your browser, make changes to your theme in `/src` & refresh!
+After deploying, open <http://vagrant.[domain]/> in your browser,
+make changes to your theme in `/src`, & refresh!
+
+
+Deployment
+----------
+
+You can specify other environments like `staging` and `production`, if you have those setup.
+
+    cap develop deploy:setup                # First time setup of remote folder structure
+    cap develop deploy                      # Setups up WordPress configs & themes
+    cap develop wordpress:db:create         # First time creation of database
+    cap develop wordpress:install           # First time initialization of database & admin user
+    cap develop wordpress:theme:activate    # Activate your theme
 
 
 [1]: http://vagrantup.com/

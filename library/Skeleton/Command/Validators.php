@@ -36,12 +36,12 @@ class Validators
         return $env;
     }
 
-    static public function validateIpAddress($ipAddress)
+    static public function validateIp($ip)
     {
-        $validated  = filter_var($ipAddress, FILTER_VALIDATE_IP);
+        $validated  = filter_var($ip, FILTER_VALIDATE_IP);
         $public     = filter_var($validated, FILTER_VALIDATE_IP, FILTER_FLAG_NO_RES_RANGE | FILTER_FLAG_NO_PRIV_RANGE);
 
-        if (empty($ipAddress)) {
+        if (empty($ip)) {
             throw new \InvalidArgumentException('IP Address must be defined');
         } elseif (!$validated) {
             throw new \InvalidArgumentException('IP Address is not a valid format');
