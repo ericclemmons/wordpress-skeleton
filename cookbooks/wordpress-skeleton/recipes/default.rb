@@ -11,6 +11,10 @@ apache_site "000-default" do
   enable false
 end
 
+apache_module "vhost_alias" do
+    enable true
+end
+
 # Create WordPress VHost
 web_app "wordpress" do
   template "wordpress.conf.erb"
