@@ -41,11 +41,10 @@ namespace :wordpress do
     namespace :theme do
         desc "Symlinks theme into themes directory"
         task :symlink do
-            set :target_dir,    Pathname.new("#{release_path}/vendor/wordpress/wordpress/wp-content/themes")
-            set :target,        Pathname.new("#{target_dir}/#{application}") #.relative_path_from(target_dir)
-            set :source,        Pathname.new("#{release_path}/src") #.relative_path_from(target_dir)
+            set :theme_dir, Pathname.new("#{release_path}/vendor/wordpress/wordpress/wp-content/themes")
 
-            run "cd #{release_path} && rm -f #{target} && ln -s #{source} #{target}"
+            run "rm -f #{theme_dir}/_s && ln -s #{release_path}/vendor/automattic/_s #{theme_dir}/_s"
+            run "rm -f #{theme_dir}/#{application} && ln -s #{release_path}/src #{theme_dir}/#{application}"
         end
 
         desc "Copies theme into themes directory"

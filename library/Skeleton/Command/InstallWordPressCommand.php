@@ -50,21 +50,13 @@ class InstallWordpressCommand extends SkeletonCommand
 
         if (is_wp_error($result)) {
             throw new \Exception($result);
-        } else {
-            $output->writeln('<info>DONE</info>');
         }
 
-        $output->writeln('Updating database...');
-
-        global $wp_current_db_version, $wp_db_version, $wpdb;
-
-        require ABSPATH.WPINC.'/version.php';
-
-        ob_start();
-        wp_upgrade();
-        ob_end_clean();
+        update_option('db_version', $wp_db_version);
+        update_option('db_upgraded', true);
 
         $output->writeln('<info>DONE</info>');
+
         $output->writeln(sprintf("\nLogin as <info>%s</info> with the password <info>%s</info>", $web['user'], $web['password']));
     }
 }

@@ -4,43 +4,39 @@ WordPress Skeleton
 WordPress skeleton utilizing [Vagrant][1], [Composer][2], [_s][3], & [Wordpress][5].
 
 
-Geting Started
---------------
+Dependencies
+------------
 
 1. Download & Install [Vagrant][1]
 
-2. Install Dependencies via `./bin/install`.  This will install [Vagrant Hostmaster][6], [Composer][2], [WordPress][5] & other dependencies.
+Geting Started
+--------------
 
-3. Setup your skeleton via `./bin/console skeleton:generate` & follw the prompts.
+Install [Vagrant Hostmaster][6], [Composer][2], [WordPress][5] & other dependencies:
 
-4. Start the development VM via `vagrant up`.
+    ./bin/install
 
-5. Create the deployment structure via `cap develop deploy:setup`.
+Configure & generate the skeleton:
 
-6. Start your development environment via `cap develop deploy`.
+    ./bin/console skeleton:configure
+    ./bin/console skeleton:generate
 
-7. **Done**!
+Deployment
+----------
+
+You can specify other environments like `staging` and `production`, if you have those setup.
+
+    cap develop deploy:setup            # First time setup of remote folder structure
+    cap develop deploy                  # Setups up WordPress configs & themes
+    cap develop wordpress:db:create     # First time creation of database
+    cap develop wordpress:install       # First time initialization of database & admin user
+
+Local Development
+-----------------
+
+    vagrant up
 
 Open <http://vagrant.[domain]/> in your browser, make changes to your theme in `/src` & refresh!
-
-
-Deploying
----------
-
-### Staging
-
-    $ cap staging deploy:setup
-
-_You only need to setup the deployment structure once._
-
-    $ cap staging deploy
-
-
-### Production
-
-    $ cap production deploy:setup
-    $ cap production deploy
-
 
 
 [1]: http://vagrantup.com/

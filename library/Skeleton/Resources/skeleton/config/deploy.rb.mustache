@@ -12,3 +12,9 @@ set :application,   "{{name}}"
 after "deploy:setup" do
     run "#{try_sudo} chown #{user} #{deploy_to}"
 end
+
+after "deploy:update_code" do
+    set :config_dir,    "#{latest_release}/config"
+
+    run "#{try_sudo} ln -s #{config_dir}/deploy/wp-config-#{stage}.php #{latest_release}/web/wp-config.php"
+end
