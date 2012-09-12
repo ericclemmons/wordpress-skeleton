@@ -18,6 +18,7 @@ $commands   = array(
     new Command\DropDatabaseWordPressCommand('wordpress:db:drop'),
     new Command\ActivateThemeWordPressCommand('wordpress:theme:activate'),
     new Command\InstallWordPressCommand('wordpress:install'),
+    new Command\InstallPluginsWordPressCommand('wordpress:plugins:install'),
 );
 
 foreach ($commands as $command) {

@@ -48,12 +48,15 @@ class ConfigureSkeletonCommand extends SkeletonCommand
             'wordpress'             => array(
                 'salts'             => file_get_contents('https://api.wordpress.org/secret-key/1.1/salt/'),
                 'develop'           => array(
-                    'db'                => array(
-                        'name'          => 'wordpress',
-                        'host'          => 'localhost',
-                        'user'          => 'vagrant',
-                        'password'      => 'vagrant',
+                    'db'            => array(
+                        'name'      => 'wordpress',
+                        'host'      => 'localhost',
+                        'user'      => 'vagrant',
+                        'password'  => 'vagrant',
                     ),
+                    'plugins'       => array(
+                        'wordpress-importer'    => null,
+                    )
                 ),
             ),
         );

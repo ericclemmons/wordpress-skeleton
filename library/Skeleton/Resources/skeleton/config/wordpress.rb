@@ -39,12 +39,19 @@ namespace :wordpress do
         run "#{latest_release}/bin/console wordpress:install --env=#{stage}"
     end
 
+    namespace :plugins do
+        # Installs & activates plugins based on skeleton config
+        task :install do
+            run "#{latest_release}/bin/console wordpress:plugins:install --env=#{stage}"
+        end
+    end
+
     desc "Symlinks WordPress root to /web"
     task :symlink  do
         set :wordpress_dir, "#{release_path}/vendor/wordpress/wordpress"
         set :web_dir,       "#{release_path}/web"
 
-        run "rm -f #{web_dir} && ln -s  #{wordpress_dir} #{web_dir}"
+        run "rm -f #{web_dir} && ln -s #{wordpress_dir} #{web_dir}"
     end
 
 

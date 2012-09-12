@@ -16,6 +16,7 @@ namespace :deploy do
 
         wordpress.db.create
         wordpress.install
+        wordpress.plugins.install
         wordpress.theme.activate
 
         start
