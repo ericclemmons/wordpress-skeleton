@@ -64,6 +64,11 @@ class Skeleton
         return realpath(__DIR__.'/../../');
     }
 
+    public function getWebRoot()
+    {
+        return $this->getRoot().'/web';
+    }
+
     public function has($property)
     {
         try {

@@ -30,7 +30,6 @@ class InstallPluginsWordPressCommand extends SkeletonCommand
 
         require $root.'/wp-load.php';
         require ABSPATH.'wp-admin/includes/admin.php';
-        // require ABSPATH.'wp-admin/includes/plugin.php';
         require ABSPATH.'wp-admin/includes/plugin-install.php';
 
         foreach ($plugins as $slug => $version) {

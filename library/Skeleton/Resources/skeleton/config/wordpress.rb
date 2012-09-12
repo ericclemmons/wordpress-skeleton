@@ -34,6 +34,13 @@ namespace :wordpress do
         end
     end
 
+    namespace :import do
+        desc "Imports the Theme Unit Test into WordPress"
+        task :theme_test do
+            run "#{latest_release}/bin/console wordpress:import:theme-test --env=#{stage}"
+        end
+    end
+
     desc "Installs WordPress similar to /wp-admin/install.php"
     task :install do
         run "#{latest_release}/bin/console wordpress:install --env=#{stage}"
