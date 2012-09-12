@@ -28,14 +28,16 @@ Local Development
 
     vagrant up
 
-After deploying, open <http://vagrant.[domain]/> in your browser,
+After deploying, open <http://develop.[domain]/> in your browser,
 make changes to your theme in `/src`, & refresh!
 
 
 Deployment
 ----------
 
-You can specify other environments like `staging` and `production`, if you have those setup.
+    cap develop deploy:cold
+
+This will automatically run the following:
 
     cap develop deploy:setup                # First time setup of remote folder structure
     cap develop deploy                      # Setups up WordPress configs & themes
@@ -43,6 +45,7 @@ You can specify other environments like `staging` and `production`, if you have 
     cap develop wordpress:install           # First time initialization of database & admin user
     cap develop wordpress:theme:activate    # Activate your theme
 
+You can specify other environments like `staging` and `production`, if you have those setup.
 
 [1]: http://vagrantup.com/
 [2]: http://getcomposer.org/

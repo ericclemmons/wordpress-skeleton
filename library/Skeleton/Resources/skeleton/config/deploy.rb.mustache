@@ -9,15 +9,22 @@ set :skeleton,      YAML.load_file(File.dirname(__FILE__) + "/skeleton.yml")
 set :stage_dir,     "deploy"
 set :application,   "{{name}}"
 
+namespace :deploy do
+    task :cold do
+        setup
+        update
+
+        wordpress.db.create
+        wordpress.install
+        wordpress.theme.activate
+
+        start
+    end
+end
+
 after "deploy:setup" do
     run "#{try_sudo} chown #{user} #{deploy_to}"
 end
 
-after "deploy:update_code" do
-    set :wordpress_dir, "#{release_path}/vendor/wordpress/wordpress"
-    set :web_dir,       "#{release_path}/web"
-    set :config_path,   "#{latest_release}/web/wp-config.php"
-
-    run "rm -f #{web_dir} && ln -s  #{wordpress_dir} #{web_dir}"
-    run "rm -f #{config_path} && ln -s #{release_path}/config/deploy/wp-config-#{stage}.php #{config_path}"
-end
+after "deploy:update_code", "wordpress:symlink"
+after "deploy:update_code", "wordpress:config:symlink"

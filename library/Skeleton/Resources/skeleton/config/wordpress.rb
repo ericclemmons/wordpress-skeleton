@@ -15,12 +15,13 @@ namespace :wordpress do
 
     namespace :config do
         desc "Symlinks wp-config.php into WordPress root"
-        task :symlink do
-            set :target_dir,    Pathname.new("#{release_path}/web")
-            set :target,        Pathname.new("#{target_dir}/wp-config.php") #.relative_path_from(target_dir)
-            set :source,        Pathname.new("#{release_path}/config/deploy/wp-config-#{stage}.php") #.relative_path_from(target_dir)
+        task :symlink  do
+            set :wordpress_dir, "#{release_path}/vendor/wordpress/wordpress"
+            set :web_dir,       "#{release_path}/web"
+            set :config_path,   "#{latest_release}/web/wp-config.php"
 
-            run "cd #{target_dir} && rm -f #{target} && ln -s #{source} #{target}"
+            run "rm -f #{web_dir} && ln -s  #{wordpress_dir} #{web_dir}"
+            run "rm -f #{config_path} && ln -s #{release_path}/config/deploy/wp-config-#{stage}.php #{config_path}"
         end
 
         desc "Copies wp-config.php into WordPress root"
@@ -37,6 +38,15 @@ namespace :wordpress do
     task :install do
         run "#{latest_release}/bin/console wordpress:install --env=#{stage}"
     end
+
+    desc "Symlinks WordPress root to /web"
+    task :symlink  do
+        set :wordpress_dir, "#{release_path}/vendor/wordpress/wordpress"
+        set :web_dir,       "#{release_path}/web"
+
+        run "rm -f #{web_dir} && ln -s  #{wordpress_dir} #{web_dir}"
+    end
+
 
     namespace :theme do
         desc "Activates theme"

@@ -8,8 +8,9 @@ use Symfony\Component\Console\Application;
 
 require __DIR__.'/../vendor/autoload.php';
 
+$root       = realpath(__DIR__.'/../');
 $console    = new Application('WordPress Skeleton', '0.1');
-$skeleton   = new Skeleton(realpath(__DIR__.'/../').'/config/skeleton.yml');
+$skeleton   = new Skeleton($root.'/config/skeleton.yml');
 $commands   = array(
     new Command\ConfigureSkeletonCommand('skeleton:configure'),
     new Command\GenerateSkeletonCommand('skeleton:generate'),

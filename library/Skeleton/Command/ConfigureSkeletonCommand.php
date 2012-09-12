@@ -34,7 +34,7 @@ class ConfigureSkeletonCommand extends SkeletonCommand
             'deploy'                => array(
                 'develop'           => array(
                     'web'           => array(
-                        'host'      => sprintf('vagrant.%s', $domain),
+                        'host'      => sprintf('develop.%s', $domain),
                         'ip'        => $ip,
                         'user'      => 'vagrant',
                         'password'  => 'vagrant',

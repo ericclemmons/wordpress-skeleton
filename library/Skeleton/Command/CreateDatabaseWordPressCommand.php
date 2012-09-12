@@ -32,7 +32,7 @@ class CreateDatabaseWordpressCommand extends SkeletonCommand
         $commands   = array(
             sprintf('CREATE DATABASE IF NOT EXISTS %s', $wordpress['db']['name']),
             sprintf('GRANT ALL ON %s.* TO %s@%s IDENTIFIED BY %s', $wordpress['db']['name'], escapeshellarg($wordpress['db']['user']), escapeshellarg('%'), escapeshellarg($wordpress['db']['password'])),
-            sprintf('GRANT ALL ON %s.* TO %s@%s IDENTIFIED BY %s', $wordpress['db']['name'], escapeshellarg($wordpress['db']['user']), escapeshellarg($deploy['web']['name']), escapeshellarg($wordpress['db']['password'])),
+            sprintf('GRANT ALL ON %s.* TO %s@%s IDENTIFIED BY %s', $wordpress['db']['name'], escapeshellarg($wordpress['db']['user']), escapeshellarg($deploy['web']['host']), escapeshellarg($wordpress['db']['password'])),
             sprintf('GRANT ALL ON %s.* TO %s@%s IDENTIFIED BY %s', $wordpress['db']['name'], escapeshellarg($wordpress['db']['user']), escapeshellarg($wordpress['db']['host']), escapeshellarg($wordpress['db']['password'])),
             'FLUSH PRIVILEGES',
         );

@@ -3,7 +3,7 @@
   ServerName <%= @params[:server_name] %>
   ServerAlias <% @params[:server_aliases].each do |a| %><%= "#{a}" %> <% end %>
 
-  # Match vagrant.*
+  # Match *.my-site.com
   VirtualDocumentRoot /var/www/%2+/current/web
 
   <Directory />
