@@ -54,7 +54,6 @@ namespace :wordpress do
         run "rm -f #{web_dir} && ln -s #{wordpress_dir} #{web_dir}"
     end
 
-
     namespace :theme do
         desc "Activates theme"
         task :activate do

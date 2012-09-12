@@ -14,6 +14,7 @@ $skeleton   = new Skeleton($root.'/config/skeleton.yml');
 $commands   = array(
     new Command\ConfigureSkeletonCommand('skeleton:configure'),
     new Command\GenerateSkeletonCommand('skeleton:generate'),
+    new Command\BrowseSkeletonCommand('skeleton:browse'),
     new Command\CreateDatabaseWordPressCommand('wordpress:db:create'),
     new Command\DropDatabaseWordPressCommand('wordpress:db:drop'),
     new Command\ActivateThemeWordPressCommand('wordpress:theme:activate'),
