@@ -16,12 +16,12 @@ namespace :wordpress do
     namespace :config do
         desc "Symlinks wp-config.php into WordPress root"
         task :symlink  do
-            set :wordpress_dir, "#{release_path}/vendor/wordpress/wordpress"
-            set :web_dir,       "#{release_path}/web"
-            set :config_path,   "#{latest_release}/web/wp-config.php"
+            set :release_path,      Pathname.new(release_path)
+            set :web_path,          Pathname.new("#{release_path}/web")
+            set :wordpress_path,    Pathname.new("#{release_path}/vendor/wordpress/wordpress")
+            set :config_path,       Pathname.new("#{release_path}/config/deploy/wp-config-#{stage}.php").relative_path_from(wordpress_path)
 
-            run "rm -f #{web_dir} && ln -s  #{wordpress_dir} #{web_dir}"
-            run "rm -f #{config_path} && ln -s #{release_path}/config/deploy/wp-config-#{stage}.php #{config_path}"
+            run "cd #{web_path} && ln -fs #{config_path} wp-config.php"
         end
 
         desc "Copies wp-config.php into WordPress root"
@@ -61,10 +61,13 @@ namespace :wordpress do
 
         desc "Symlinks theme into themes directory"
         task :symlink do
-            set :theme_dir, Pathname.new("#{release_path}/vendor/wordpress/wordpress/wp-content/themes")
+            set :wordpress_path,    Pathname.new("#{release_path}/vendor/wordpress/wordpress")
+            set :themes_path,       Pathname.new("#{wordpress_path}/wp-content/themes")
+            set :_s_path,           Pathname.new("#{release_path}/vendor/automattic/_s").relative_path_from(themes_path)
+            set :src_path,          Pathname.new("#{release_path}/src").relative_path_from(themes_path)
 
-            run "rm -f #{theme_dir}/_s && ln -s #{release_path}/vendor/automattic/_s #{theme_dir}/_s"
-            run "rm -f #{theme_dir}/#{application} && ln -s #{release_path}/src #{theme_dir}/#{application}"
+            run "cd #{themes_path} && ln -fs #{_s_path} _s"
+            run "cd #{themes_path} && ln -fs #{src_path} #{application}"
         end
 
         desc "Copies theme into themes directory"
