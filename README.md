@@ -1,55 +1,97 @@
 WordPress Skeleton
 ==================
 
-WordPress skeleton utilizing [Vagrant][1], [Composer][2], [_s][3], & [Wordpress][5].
+Opinionated WordPress starter template that sets up local development
+& remote deployment via a simple configuration & command-line tools.
+
+
+Features
+--------
+
+* Simple installation & configuration via [Composer][2] & an interactive `console`
+* Local development environment via [Vagrant][1]
+* Simple local URLs like `http://local.mysite.com/` via [Vagrant Hostmaster][6]
+* Local & remote deployment via [Capistrano][4]
+* Simplified theme development via [_s][3] and the WordPress [Theme Unit Test][8]
 
 
 Dependencies
 ------------
 
-1. Download & Install [Vagrant][1]
+* Download & Install [Vagrant][1]
 
 
-Geting Started
---------------
+Starting a New Theme
+--------------------
 
-Install [Vagrant Hostmaster][6], [Composer][2], [WordPress][5] & other dependencies:
+    > cd path/to/sites
+    > git://github.com/ericclemmons/wordpress-skeleton.git
+    > cd wordpress-skeleton
 
-    ./bin/install
 
-Configure & generate the skeleton:
+Using an Existing Theme
+-----------------------
 
-    ./bin/console skeleton:configure
+    > cd path/to/existing/site
+    > mv path/to/wp-content/themes/mytheme src
+    > git remote add skeleton git://github.com/ericclemmons/wordpress-skeleton.git
+    > git fetch skeleton && git merge --squash skeleton/master
+
+This will give you the chance to resolve any conflicts in `.gitignore` or `README.md`.
+
+Finally, you can commit your changes with something like:
+
+    > git commit -m 'Migrated theme to WordPress Skeleton'
+
+
+Setting Up Your Skeleton
+------------------------
+
+    > ./bin/install
+    > ./bin/console skeleton:configure
 
 
 Local Development
 -----------------
 
-    vagrant up
+    > vagrant up
 
-After deploying, open <http://local.[domain]/> in your browser,
-make changes to your theme in `/src`, & refresh!
+The first time you run this, you have to perform a `cold` deployment to setup
+the folder structure & database:
+
+    > cap local deploy:cold
+
+After doing it once, you can just do normal deployments, which will only update the theme:
+
+    > cap local deploy
 
 
-Deployment
-----------
+Open WordPress in your browser:
 
-    cap local deploy:cold
+    > ./bin/console skeleton:browse
 
-This will automatically run the following:
 
-    cap local deploy:setup                # First time setup of remote folder structure
-    cap local deploy                      # Setups up WordPress configs & themes
-    cap local wordpress:db:create         # First time creation of database
-    cap local wordpress:install           # First time initialization of database & admin user
-    cap local wordpress:theme:activate    # Activate your theme
+Now you can make changes to `/src` and refresh!
 
-You can specify other environments like `staging` and `production`, if you have those setup.
 
-[1]: http://vagrantup.com/
+Useful Commands
+---------------
+
+- `./bin/install` is the one-time installation script for setting up dependencies
+  needed for the skeleton to operate.
+
+- `./bin/console` will list all possible commands you can run to affect your local
+  skeleton's configuration.  These commands are also ran remotely via `cap` to
+  perform tasks on the server.
+
+- `cap -T` will list all deployment & WordPress-related commands that can be used
+  with each environment.  (You will use `local` the most)
+
+
+[1]: http://downloads.vagrantup.com/
 [2]: http://getcomposer.org/
 [3]: http://underscores.me/
+[4]: http://capistranorb.com/
 [5]: http://github.com/WordPress/WordPress
 [6]: http://github.com/mosaicxm/vagrant-hostmaster
-[7]: http://getcomposer.org/doc/00-intro.md#globally
 [8]: http://codex.wordpress.org/Theme_Unit_Test
