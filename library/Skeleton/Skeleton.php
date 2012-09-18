@@ -28,6 +28,11 @@ class Skeleton
         return $this->generator->generateSkeleton($this->getConfig());
     }
 
+    public function generateSkeleton(array $context)
+    {
+        return $this->generator->generateSkeleton($context);
+    }
+
     public function get($property)
     {
         $paths  = explode('.', $property);
@@ -90,22 +95,7 @@ class Skeleton
         if (is_file($this->configPath)) {
             $this->config = Yaml::parse($this->configPath);
         }
-    }
 
-    public function writeConfig(array $config)
-    {
-        $yaml   = Yaml::dump($config, 8);
-        $path   = $this->getConfigPath();
-        $dir    = dirname($path);
-
-        if (!is_dir($dir) && !mkdir($dir, 0775)) {
-            throw new \Exception('Unable to create folder '.$dir);
-        }
-
-        $success = file_put_contents($path, $yaml);
-
-        $this->initConfig();
-
-        return $success;
+        return $this->getConfig();
     }
 }

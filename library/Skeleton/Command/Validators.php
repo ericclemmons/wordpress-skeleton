@@ -52,6 +52,15 @@ class Validators
         return $validated;
     }
 
+    static public function validateName($name)
+    {
+        if (empty($name)) {
+            throw new \InvalidArgumentException('Name must be defined');
+        }
+
+        return $name;
+    }
+
     static public function validatePath($path)
     {
         $path = realpath($path);
@@ -61,5 +70,16 @@ class Validators
         }
 
         return $path;
+    }
+
+    static public function validateRepository($repo)
+    {
+        $extension = pathinfo($repo, PATHINFO_EXTENSION);
+
+        if ($extension !== 'git') {
+            throw new \InvalidArgumentException('Repository must have a .git extension');
+        }
+
+        return $repo;
     }
 }

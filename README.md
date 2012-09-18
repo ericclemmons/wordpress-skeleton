@@ -20,7 +20,6 @@ Install [Vagrant Hostmaster][6], [Composer][2], [WordPress][5] & other dependenc
 Configure & generate the skeleton:
 
     ./bin/console skeleton:configure
-    ./bin/console skeleton:generate
 
 
 Local Development
@@ -28,22 +27,22 @@ Local Development
 
     vagrant up
 
-After deploying, open <http://develop.[domain]/> in your browser,
+After deploying, open <http://local.[domain]/> in your browser,
 make changes to your theme in `/src`, & refresh!
 
 
 Deployment
 ----------
 
-    cap develop deploy:cold
+    cap local deploy:cold
 
 This will automatically run the following:
 
-    cap develop deploy:setup                # First time setup of remote folder structure
-    cap develop deploy                      # Setups up WordPress configs & themes
-    cap develop wordpress:db:create         # First time creation of database
-    cap develop wordpress:install           # First time initialization of database & admin user
-    cap develop wordpress:theme:activate    # Activate your theme
+    cap local deploy:setup                # First time setup of remote folder structure
+    cap local deploy                      # Setups up WordPress configs & themes
+    cap local wordpress:db:create         # First time creation of database
+    cap local wordpress:install           # First time initialization of database & admin user
+    cap local wordpress:theme:activate    # Activate your theme
 
 You can specify other environments like `staging` and `production`, if you have those setup.
 

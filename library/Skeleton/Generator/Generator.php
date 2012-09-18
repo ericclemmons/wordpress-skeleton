@@ -21,23 +21,6 @@ class Generator
         $this->mustache->setTemplatePath($this->source);
     }
 
-    public function generateIp()
-    {
-        $blocks = array(
-            array('10.0.0.0', '10.255.255.255'),
-            array('172.16.0.0', '172.31.255.255'),
-            array('192.168.0.0', '192.168.255.255'),
-        );
-
-        $block  = $blocks[array_rand($blocks)];
-        $range  = array_map('ip2long', $block);
-
-        $long   = rand(current($range) + 1, end($range) - 1);
-        $ip     = long2ip($long);
-
-        return $ip;
-    }
-
     /**
      * Generates a template to a destination with a given scope
      *
@@ -70,7 +53,7 @@ class Generator
             $target     = sprintf('%s/%s', $this->destination, $template);
             $parentDir  = dirname($target);
 
-            if (!is_dir($parentDir) && !mkdir($parentDir, 0775)) {
+            if (!is_dir($parentDir) && !mkdir($parentDir, 0775, true)) {
                 throw new \Exception('Unable to create directory '.$parentDir);
             }
 

@@ -1,0 +1,26 @@
+name:                               {{name}}
+description:                        {{description}}
+author:                             {{author}}
+domain:                             {{domain}}
+repository:                         {{repository}}
+deploy:
+    local:
+        web:
+            host:                   {{deploy.local.web.host}}
+            ip:                     {{deploy.local.web.ip}}
+            user:                   {{deploy.local.web.user}}
+            password:               {{deploy.local.web.password}}
+        db:
+            user:                   {{deploy.local.db.user}}
+            password:               {{deploy.local.db.password}}
+wordpress:
+    salts: |
+        {{wordpress.salts}}
+    local:
+        db:
+            host:                   {{wordpress.local.db.host}}
+            name:                   {{wordpress.local.db.name}}
+            user:                   {{wordpress.local.db.user}}
+            password:               {{wordpress.local.db.password}}
+        plugins:
+            wordpress-importer:     ~

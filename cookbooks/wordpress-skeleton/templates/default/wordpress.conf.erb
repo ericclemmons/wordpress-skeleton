@@ -7,13 +7,13 @@
   VirtualDocumentRoot /var/www/%2+/current/web
 
   <Directory />
-    Options FollowSymLinks
+    Options +FollowSymLinks
     AllowOverride FileInfo Options
     Order allow,deny
     Allow from all
   </Directory>
 
-  LogLevel info
+  LogLevel debug
   ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-error.log
   CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-access.log combined
 
