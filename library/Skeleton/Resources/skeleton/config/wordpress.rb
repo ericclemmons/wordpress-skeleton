@@ -53,14 +53,6 @@ namespace :wordpress do
         end
     end
 
-    desc "Symlinks WordPress root to /web"
-    task :symlink  do
-        set :wordpress_dir, "#{release_path}/vendor/wordpress/wordpress"
-        set :web_dir,       "#{release_path}/web"
-
-        run "rm -f #{web_dir} && ln -s #{wordpress_dir} #{web_dir}"
-    end
-
     namespace :theme do
         desc "Activates theme"
         task :activate do

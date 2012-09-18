@@ -27,5 +27,4 @@ after "deploy:setup" do
     run "#{try_sudo} chown #{user} #{deploy_to}"
 end
 
-after "deploy:update_code", "wordpress:symlink"
 after "deploy:update_code", "wordpress:config:symlink"
