@@ -6,11 +6,11 @@ $interpreter    = (PHP_OS == 'WINNT') ? 'php.exe' : 'php';
 $commands       = array(
     sprintf('curl -s http://getcomposer.org/installer | %s -- %s', $interpreter, $root) => !file_exists($root.'/composer.phar'),
     sprintf('%s %s/composer.phar install --dev', $interpreter, $root)                   => true,
-    'gem install vagrant-hostmaster'                                                    => !filter_var(`gem list vagrant-hostmaster -i`, FILTER_VALIDATE_BOOLEAN),
-    'gem install capistrano'                                                            => !filter_var(`gem list capistrano -i`, FILTER_VALIDATE_BOOLEAN),
-    'gem install capistrano-php'                                                        => !filter_var(`gem list capistrano-php -i`, FILTER_VALIDATE_BOOLEAN),
-    'gem install capistrano-ext'                                                        => !filter_var(`gem list capistrano-ext -i`, FILTER_VALIDATE_BOOLEAN),
-    'gem install railsless-deploy'                                                      => !filter_var(`gem list railsless-deploy -i`, FILTER_VALIDATE_BOOLEAN),
+    'sudo gem install vagrant-hostmaster'                                               => !filter_var(`sudo gem list vagrant-hostmaster -i`, FILTER_VALIDATE_BOOLEAN),
+    'sudo gem install capistrano'                                                       => !filter_var(`sudo gem list capistrano -i`, FILTER_VALIDATE_BOOLEAN),
+    'sudo gem install capistrano-php'                                                   => !filter_var(`sudo gem list capistrano-php -i`, FILTER_VALIDATE_BOOLEAN),
+    'sudo gem install capistrano-ext'                                                   => !filter_var(`sudo gem list capistrano-ext -i`, FILTER_VALIDATE_BOOLEAN),
+    'sudo gem install railsless-deploy'                                                 => !filter_var(`sudo gem list railsless-deploy -i`, FILTER_VALIDATE_BOOLEAN),
 );
 
 chdir($root);
