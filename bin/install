@@ -2,7 +2,7 @@
 <?php
 
 $root           = realpath(__DIR__ . '/../');
-$interpreter    = (PHP_OS == 'WINNT') ? 'php.exe' : 'php';
+$interpreter    = sprintf('%s -d detect_unicode=Off', (PHP_OS == 'WINNT') ? 'php.exe' : 'php');
 $commands       = array(
     sprintf('curl -s http://getcomposer.org/installer | %s -- %s', $interpreter, $root) => !file_exists($root.'/composer.phar'),
     sprintf('%s %s/composer.phar install --dev', $interpreter, $root)                   => true,
