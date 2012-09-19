@@ -47,8 +47,7 @@ Finally, you can commit your changes with something like:
 Setting Up Your Skeleton
 ------------------------
 
-    > ./bin/install
-    > ./bin/console skeleton:configure
+    > ./skeleton configure
 
 
 Local Development
@@ -68,7 +67,7 @@ After doing it once, you can just do normal deployments, which will only update 
 
 Open WordPress in your browser:
 
-    > ./bin/console skeleton:browse
+    > ./skeleton open
 
 
 Now you can make changes to `/src` and refresh!
@@ -77,10 +76,7 @@ Now you can make changes to `/src` and refresh!
 Useful Commands
 ---------------
 
-- `./bin/install` is the one-time installation script for setting up dependencies
-  needed for the skeleton to operate.
-
-- `./bin/console` will list all possible commands you can run to affect your local
+- `./skeleton` will list all possible commands you can run to affect your local
   skeleton's configuration.  These commands are also ran remotely via `cap` to
   perform tasks on the server.
 

@@ -29,7 +29,7 @@ class GenerateSkeletonCommand extends SkeletonCommand
                 $output->writeln(sprintf("\tGenerated <info>%s</info>", $file));
             }
         } else {
-            throw new \Exception(sprintf('Config not found.  Did you run `skeleton:configure`?', $path));
+            throw new \Exception(sprintf('Config not found.  Did you run `configure`?', $path));
         }
     }
 }
