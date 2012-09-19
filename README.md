@@ -50,6 +50,28 @@ Setting Up Your Skeleton
     > ./skeleton configure
 
 
+Saving Your Skeleton
+--------------------
+
+After the skeleton is created, you can see the files it creates:
+
+    > git status
+    ...
+    # Untracked files:
+    #   (use "git add <file>..." to include in what will be committed)
+    #
+    # Vagrantfile
+    # config/
+    # src/
+
+
+- `Vagrantfile` defines your local VM's settings.
+- `config/` contains deployment scripts and `skeleton.yml`, which stores your options
+  for regenerating your skeleton from scratch, should you need to.
+- `src/` houses your theme folder and is linked & activated within WordPress upon
+  deployment.
+
+
 Local Development
 -----------------
 
