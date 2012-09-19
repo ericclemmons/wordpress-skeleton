@@ -11,10 +11,10 @@ namespace :deploy do
         setup
         update
 
-        wordpress.db.create
-        wordpress.install
-        wordpress.plugins.install
-        wordpress.theme.activate
+        wp.db.create
+        wp.install
+        wp.plugins.install
+        wp.theme.activate
 
         start
     end
@@ -24,4 +24,4 @@ after "deploy:setup" do
     run "#{try_sudo} chown #{user} #{deploy_to}"
 end
 
-after "deploy:update_code", "wordpress:config:symlink"
+after "deploy:update_code", "wp:config:symlink"

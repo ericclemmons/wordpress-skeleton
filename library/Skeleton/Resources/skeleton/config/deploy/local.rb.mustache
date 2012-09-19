@@ -18,7 +18,7 @@ set :group_writable,        true
 
 default_run_options[:pty] = true
 
-after "deploy:update", "wordpress:theme:symlink"
+after "deploy:update", "wp:theme:symlink"
 
 namespace :deploy do
     task :update_code do

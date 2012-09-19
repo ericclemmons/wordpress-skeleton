@@ -1,15 +1,15 @@
 require 'pathname'
 
-namespace :wordpress do
+namespace :wp do
     namespace :db do
         desc "Creates WordPress database"
         task :create do
-            run "#{latest_release}/bin/console wordpress:db:create --env=#{stage}"
+            run "#{latest_release}/skeleton wp:db:create --env=#{stage}"
         end
 
         desc "Drops WordPress database"
         task :drop do
-            run "#{latest_release}/bin/console wordpress:db:drop --env=#{stage}"
+            run "#{latest_release}/skeleton wp:db:drop --env=#{stage}"
         end
     end
 
@@ -37,26 +37,26 @@ namespace :wordpress do
     namespace :import do
         desc "Imports the Theme Unit Test into WordPress"
         task :theme_test do
-            run "#{latest_release}/bin/console wordpress:import:theme-test --env=#{stage}"
+            run "#{latest_release}/skeleton wp:import:theme-test --env=#{stage}"
         end
     end
 
     desc "Installs WordPress similar to /wp-admin/install.php"
     task :install do
-        run "#{latest_release}/bin/console wordpress:install --env=#{stage}"
+        run "#{latest_release}/skeleton wp:install --env=#{stage}"
     end
 
     namespace :plugins do
         # Installs & activates plugins based on skeleton config
         task :install do
-            run "#{latest_release}/bin/console wordpress:plugins:install --env=#{stage}"
+            run "#{latest_release}/skeleton wp:plugins:install --env=#{stage}"
         end
     end
 
     namespace :theme do
         desc "Activates theme"
         task :activate do
-            run "#{latest_release}/bin/console wordpress:theme:activate --env=#{stage}"
+            run "#{latest_release}/skeleton wp:theme:activate --env=#{stage}"
         end
 
         desc "Symlinks theme into themes directory"
