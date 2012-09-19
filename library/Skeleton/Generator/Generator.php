@@ -31,17 +31,14 @@ class Generator
     public function generateSkeleton(array $context = array())
     {
         $files      = new \RecursiveDirectoryIterator($this->source, \RecursiveDirectoryIterator::SKIP_DOTS | \RecursiveDirectoryIterator::FOLLOW_SYMLINKS);
-        $filtered   = new \RecursiveCallbackFilterIterator($files, function($file, $path, $iterator) {
+        $iterator   = new \RecursiveIteratorIterator($files);
+        $generated  = array();
+
+        foreach ($iterator as $path => $file) {
             if ($file->getBasename() === '.git') {
                 return false;
             }
 
-            return true;
-        });
-
-        $generated = array();
-
-        foreach (new \RecursiveIteratorIterator($filtered) as $path => $file) {
             $template = str_replace(array($this->source.'/', '.mustache'), null, $path);
 
             if ($file->getExtension() === 'mustache') {
