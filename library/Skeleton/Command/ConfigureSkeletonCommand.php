@@ -118,11 +118,19 @@ class ConfigureSkeletonCommand extends SkeletonCommand
 
     private function guessAuthor()
     {
+        if ($this->skeleton->has('author')) {
+            return $this->skeleton->get('author');
+        }
+
         return trim(`git config user.name`) ?: null;
     }
 
     private function guessDomain($repo)
     {
+        if ($this->skeleton->has('domain')) {
+            return $this->skeleton->get('domain');
+        }
+
         $name   = strtolower(basename($repo, '.git'));
         $domain = sprintf('%s.%s',
             pathinfo($name, PATHINFO_FILENAME),
@@ -134,6 +142,10 @@ class ConfigureSkeletonCommand extends SkeletonCommand
 
     private function guessIp()
     {
+        if ($this->skeleton->has('deploy.local.web.ip')) {
+            return $this->skeleton->get('deploy.local.web.ip');
+        }
+
         $blocks = array(
             array('10.0.0.0', '10.255.255.255'),
             array('172.16.0.0', '172.31.255.255'),
@@ -151,6 +163,10 @@ class ConfigureSkeletonCommand extends SkeletonCommand
 
     private function guessName($repo)
     {
+        if ($this->skeleton->has('name')) {
+            return $this->skeleton->get('name');
+        }
+
         $filename   = pathinfo($repo, PATHINFO_FILENAME);
         $name       = ucwords(preg_replace('/[-]+/', ' ', $filename));
 
@@ -159,6 +175,10 @@ class ConfigureSkeletonCommand extends SkeletonCommand
 
     private function guessRepository()
     {
+        if ($this->skeleton->has('repository')) {
+            return $this->skeleton->get('repository');
+        }
+
         $parts = explode('Fetch URL: ', trim(`git remote show -n origin | grep "Fetch URL"`));
 
         return end($parts) ?: null;

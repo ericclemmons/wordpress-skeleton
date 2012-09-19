@@ -23,7 +23,7 @@ class GenerateSkeletonCommand extends SkeletonCommand
         if ($this->skeleton->hasConfig()) {
             $output->writeln('Generating...');
 
-            $generated  = $this->skeleton->generate();
+            $generated = $this->skeleton->generate();
 
             foreach ($generated as $file) {
                 $output->writeln(sprintf("\tGenerated <info>%s</info>", $file));
