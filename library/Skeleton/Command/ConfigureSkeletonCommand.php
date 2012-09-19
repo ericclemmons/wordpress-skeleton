@@ -58,7 +58,7 @@ class ConfigureSkeletonCommand extends SkeletonCommand
                 ),
             ),
             'wordpress'             => array(
-                'salts'             => str_replace("\n", "\n".str_repeat(' ', 8), trim($salts)),
+                'salts'             => Validators::validateSalts($salts),
                 'local'             => array(
                     'db'            => array(
                         'host'      => 'localhost',

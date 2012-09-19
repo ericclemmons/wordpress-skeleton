@@ -82,4 +82,9 @@ class Validators
 
         return $repo;
     }
+
+    static public function validateSalts($salts)
+    {
+        return preg_replace("/\n(\w)/", "\n".str_repeat(' ', 8).'$1', trim($salts));
+    }
 }

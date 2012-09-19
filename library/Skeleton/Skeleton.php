@@ -2,6 +2,7 @@
 
 namespace Skeleton;
 
+use Skeleton\Command\Validators;
 use Skeleton\Generator\Generator;
 use Symfony\Component\Yaml\Yaml;
 
@@ -96,6 +97,25 @@ class Skeleton
             $this->config = Yaml::parse($this->configPath);
         }
 
+        // Ensure salts have enough spaces to prevent YAML parse errors
+        if ($this->has('wordpress.salts')) {
+            $this->set('wordpress.salts', Validators::validateSalts($this->get('wordpress.salts')));
+        }
+
         return $this->getConfig();
+    }
+
+    public function set($property, $value)
+    {
+        $paths  = explode('.', $property);
+        $root   = &$this->config;
+
+        foreach ($paths as $path) {
+            $root = &$root[$path];
+        }
+
+        $root = $value;
+
+        return $this;
     }
 }
