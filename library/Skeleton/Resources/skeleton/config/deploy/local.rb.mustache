@@ -18,12 +18,13 @@ set :group_writable,        true
 
 default_run_options[:pty] = true
 
-after "deploy:update", "wp:theme:symlink"
-
 namespace :deploy do
-    task :update_code do
+    task :update_code, :except => { :no_release => true } do
+        on_rollback { run "rm -rf #{release_path}; true" }
+
         logger.important "`deploy:update_code` skipped because folder is mounted"
         run "#{try_sudo} ln -s /vagrant #{release_path}"
+
         finalize_update
     end
 end

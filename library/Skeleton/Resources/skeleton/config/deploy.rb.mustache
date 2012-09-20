@@ -6,22 +6,19 @@ require "yaml"
 set :stage_dir,     "deploy"
 set :application,   "{{domain}}"
 
-namespace :deploy do
-    task :cold do
-        setup
-        update
-
-        wp.db.create
-        wp.install
-        wp.plugins.install
-        wp.theme.activate
-
-        start
-    end
-end
-
 after "deploy:setup" do
     run "#{try_sudo} chown #{user} #{deploy_to}"
 end
 
-after "deploy:update_code", "wp:config:symlink"
+after "deploy:update_code", "wp:config:symlink", "wp:theme:symlink"
+after "deploy:update_code", "wp:plugins:install", "wp:theme:activate"
+
+namespace :deploy do
+    task :cold do
+        after "deploy:update_code", "wp:db:create", "wp:install"
+
+        setup
+        update
+        start
+    end
+end
