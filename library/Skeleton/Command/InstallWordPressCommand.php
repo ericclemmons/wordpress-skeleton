@@ -28,7 +28,8 @@ class InstallWordpressCommand extends SkeletonCommand
         $root   = realpath(__DIR__.'/../../../web');
 
         $_SERVER['DOCUMENT_ROOT']   = getcwd();
-        $_SERVER['HTTP_HOST'] =      $web['host'];
+        $_SERVER['SERVER_PROTOCOL'] = 'http';
+        $_SERVER['HTTP_HOST']       = $web['host'];
 
 
         define('WP_ROOT', $root.'/');
