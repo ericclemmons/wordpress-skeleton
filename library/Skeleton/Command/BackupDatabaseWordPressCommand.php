@@ -43,6 +43,8 @@ class BackupDatabaseWordpressCommand extends SkeletonCommand
 
         if ($error) {
             $output->writeln("\t<error>FAILED</error>");
+
+            return 1;
         } else {
             $output->writeln("\t<comment>SUCCESS</comment>");
         }

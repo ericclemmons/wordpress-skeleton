@@ -25,15 +25,21 @@ class DropDatabaseWordpressCommand extends SkeletonCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $env        = Validators::validateEnv($input->getOption('env'));
-        $yaml       = Yaml::parse(realpath(__DIR__.'/../../../config/skeleton.yml'));
-        $deploy     = $yaml['deploy'][$env]['db'];
-        $wordpress  = $yaml['wordpress'][$env]['db'];
+
+        // Internal WordPress connection details
+        $wpName     = $this->skeleton->get('wordpress.%s.db.name',  $env);
+        $wpHost     = $this->skeleton->get('wordpress.%s.db.host',  $env);
+
+        // Database admin user
+        $dbUser     = $this->skeleton->get('deploy.%s.db.user',     $env);
+        $dbPassword = $this->skeleton->get('deploy.%s.db.password', $env);
+
 
         $command = sprintf('mysql --host=%s --user=%s --password=%s --execute=%s',
-            escapeshellarg($wordpress['host']),
-            escapeshellarg($deploy['user']),
-            escapeshellarg($deploy['password']),
-            escapeshellarg(sprintf('DROP DATABASE IF EXISTS %s', $wordpress['name']))
+            escapeshellarg($wpHost),
+            escapeshellarg($dbUser),
+            escapeshellarg($dbPassword),
+            escapeshellarg(sprintf('DROP DATABASE IF EXISTS %s', $wpName))
         );
 
         $output->writeln(sprintf('Running <info>%s</info>', $command));
@@ -42,6 +48,8 @@ class DropDatabaseWordpressCommand extends SkeletonCommand
 
         if ($error) {
             $output->writeln("\t<error>FAILED</error>");
+
+            return 1;
         } else {
             $output->writeln("\t<comment>SUCCESS</comment>");
         }

@@ -25,27 +25,39 @@ class CreateDatabaseWordpressCommand extends SkeletonCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $env        = Validators::validateEnv($input->getOption('env'));
-        $yaml       = Yaml::parse(realpath(__DIR__.'/../../../config/skeleton.yml'));
-        $deploy     = $yaml['deploy'][$env];
-        $wordpress  = $yaml['wordpress'][$env];
 
+        // Internal WordPress connection details
+        $wpName     = $this->skeleton->get('wordpress.%s.db.name',      $env);
+        $wpUser     = $this->skeleton->get('wordpress.%s.db.user',      $env);
+        $wpPassword = $this->skeleton->get('wordpress.%s.db.password',  $env);
+        $wpHost     = $this->skeleton->get('wordpress.%s.db.host',      $env);
+
+        // Database admin user
+        $dbUser     = $this->skeleton->get('deploy.%s.db.user',         $env);
+        $dbPassword = $this->skeleton->get('deploy.%s.db.password',     $env);
+
+        // External host name
+        $webHost    = $this->skeleton->get('deploy.%s.web.host',        $env);
+
+        // Grant access to WP database for WP user + password
         $commands   = array(
-            sprintf('CREATE DATABASE IF NOT EXISTS %s', $wordpress['db']['name']),
-            sprintf('GRANT ALL ON %s.* TO %s@%s IDENTIFIED BY %s', $wordpress['db']['name'], escapeshellarg($wordpress['db']['user']), escapeshellarg('%'), escapeshellarg($wordpress['db']['password'])),
-            sprintf('GRANT ALL ON %s.* TO %s@%s IDENTIFIED BY %s', $wordpress['db']['name'], escapeshellarg($wordpress['db']['user']), escapeshellarg($deploy['web']['host']), escapeshellarg($wordpress['db']['password'])),
-            sprintf('GRANT ALL ON %s.* TO %s@%s IDENTIFIED BY %s', $wordpress['db']['name'], escapeshellarg($wordpress['db']['user']), escapeshellarg($wordpress['db']['host']), escapeshellarg($wordpress['db']['password'])),
+            sprintf('CREATE DATABASE IF NOT EXISTS %s', $wpName),
+            sprintf('GRANT ALL ON %s.* TO %s@%s IDENTIFIED BY %s', $wpName, escapeshellarg($wpUser), escapeshellarg('%'),       escapeshellarg($wpPassword)),
+            sprintf('GRANT ALL ON %s.* TO %s@%s IDENTIFIED BY %s', $wpName, escapeshellarg($wpUser), escapeshellarg($wpHost),   escapeshellarg($wpPassword)),
+            sprintf('GRANT ALL ON %s.* TO %s@%s IDENTIFIED BY %s', $wpName, escapeshellarg($wpUser), escapeshellarg($webHost),  escapeshellarg($wpPassword)),
             'FLUSH PRIVILEGES',
         );
 
+        // Use database admin for granting access
         foreach ($commands as $command) {
             $wrapper = sprintf('mysql --host=%s --user=%s --password=%s --execute=%s',
-                escapeshellarg($wordpress['db']['host']),
-                escapeshellarg($deploy['db']['user']),
-                escapeshellarg($deploy['db']['password']),
+                escapeshellarg($wpHost),
+                escapeshellarg($dbUser),
+                escapeshellarg($dbPassword),
                 escapeshellarg($command)
             );
 
-            $output->write(sprintf('Running <info>%s</info>...', $command));
+            $output->write(sprintf('Running <info>%s</info>...', $wrapper));
 
             passthru($wrapper, $error);
 
