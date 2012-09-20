@@ -14,6 +14,8 @@ set :use_sudo,              true
 set :user,                  "{{deploy.local.web.user}}"
 set :password,              "{{deploy.local.web.password}}"
 
+# Disable shared children since we're symlinking to a real location
+set :shared_children,       []
 set :group_writable,        true
 
 default_run_options[:pty] = true
