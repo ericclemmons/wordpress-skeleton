@@ -34,8 +34,12 @@ class Skeleton
         return $this->generator->generateSkeleton($context);
     }
 
-    public function get($property)
+    public function get($property, $args = null)
     {
+        if ($args) {
+            $property = call_user_func_array('sprintf', func_get_args());
+        }
+
         $paths  = explode('.', $property);
         $root   = $this->config;
 
@@ -43,7 +47,7 @@ class Skeleton
             if (isset($root[$path])) {
                 $root = $root[$path];
             } else {
-                throw new \InvalidArgumentException(sprintf('Property %s is not set', $property));
+                return null;
             }
         }
 
@@ -77,13 +81,7 @@ class Skeleton
 
     public function has($property)
     {
-        try {
-            $this->get($property);
-
-            return true;
-        } catch (\InvalidArgumentException $e) {
-            return false;
-        }
+        return !is_null($this->get($property));
     }
 
     public function hasConfig()
@@ -98,8 +96,13 @@ class Skeleton
         }
 
         // Ensure salts have enough spaces to prevent YAML parse errors
-        if ($this->has('wordpress.salts')) {
-            $this->set('wordpress.salts', Validators::validateSalts($this->get('wordpress.salts')));
+        if ($this->has('wordpress')) {
+            foreach ($this->get('wordpress') as $env => $settings) {
+                $property   = 'wordpress.'.$env.'.salts';
+                $salts      = Validators::validateSalts($this->get($property));
+
+                $this->set($property, $salts);
+            }
         }
 
         return $this->getConfig();

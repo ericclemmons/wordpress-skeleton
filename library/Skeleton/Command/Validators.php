@@ -6,13 +6,22 @@ use Symfony\Component\Yaml\Yaml;
 
 class Validators
 {
-    static public function validateDomain($domain)
+    static public function validateHost($host)
     {
-        if (empty($domain)) {
-            throw new \InvalidArgumentException('Domain must be defined');
+        if (empty($host)) {
+            throw new \InvalidArgumentException('Host must be defined');
         }
 
-        return strtolower($domain);
+        $host   = strtolower(trim($host));
+        $parts  = explode('.', $host);
+
+        switch (count($parts)) {
+            case 2:
+            case 3:
+                return $host;
+            default:
+                throw new \InvalidArgumentException('Host must follow the format: [subdomain.]domain.tld');
+        }
     }
 
     static public function validateEnv($env)
@@ -39,14 +48,11 @@ class Validators
     static public function validateIp($ip)
     {
         $validated  = filter_var($ip, FILTER_VALIDATE_IP);
-        $public     = filter_var($validated, FILTER_VALIDATE_IP, FILTER_FLAG_NO_RES_RANGE | FILTER_FLAG_NO_PRIV_RANGE);
 
         if (empty($ip)) {
             throw new \InvalidArgumentException('IP Address must be defined');
         } elseif (!$validated) {
             throw new \InvalidArgumentException('IP Address is not a valid format');
-        } elseif ($public) {
-            throw new \InvalidArgumentException('IP Address cannot be public');
         }
 
         return $validated;
@@ -85,6 +91,6 @@ class Validators
 
     static public function validateSalts($salts)
     {
-        return preg_replace("/\n(\w)/", "\n".str_repeat(' ', 8).'$1', trim($salts));
+        return preg_replace("/\n(\w)/", "\n".str_repeat(' ', 12).'$1', trim($salts));
     }
 }
