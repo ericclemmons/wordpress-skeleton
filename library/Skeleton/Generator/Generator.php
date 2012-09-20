@@ -2,23 +2,21 @@
 
 namespace Skeleton\Generator;
 
-use Phly\Mustache\Mustache;
+use Skeleton\Skeleton;
 
 class Generator
 {
+    private $skeleton;
+
     private $source;
 
     private $destination;
 
-    private $mustache;
-
-    public function __construct($source, $destination)
+    public function __construct(Skeleton $skeleton, $source, $destination)
     {
+        $this->skeleton     = $skeleton;
         $this->source       = $source;
         $this->destination  = $destination;
-        $this->mustache     = new Mustache();
-
-        $this->mustache->setTemplatePath($this->source);
     }
 
     /**
@@ -28,7 +26,7 @@ class Generator
      * @param string Path to destination
      * @param array Template scope variables
      */
-    public function generateSkeleton(array $context = array())
+    public function generateSkeleton()
     {
         $files      = new \RecursiveDirectoryIterator($this->source, \RecursiveDirectoryIterator::SKIP_DOTS | \RecursiveDirectoryIterator::FOLLOW_SYMLINKS);
         $iterator   = new \RecursiveIteratorIterator($files);
@@ -40,14 +38,13 @@ class Generator
             }
 
             $template = str_replace(array($this->source.'/', '.mustache'), null, $path);
+            $contents = file_get_contents($path);
 
             if ($file->getExtension() === 'mustache') {
-                $contents = $this->generateTemplate($template, $context);
-            } else {
-                $contents = file_get_contents($path);
+                $contents = $this->parse($contents);
             }
 
-            $target     = sprintf('%s/%s', $this->destination, $template);
+            $target     = $this->parse(sprintf('%s/%s', $this->destination, $template));
             $parentDir  = dirname($target);
 
             if (!is_dir($parentDir) && !mkdir($parentDir, 0775, true)) {
@@ -64,8 +61,14 @@ class Generator
         return $generated;
     }
 
-    public function generateTemplate($template, array $context = array())
+    public function parse($template)
     {
-        return $this->mustache->render($template, $context);
+        $skeleton = $this->skeleton;
+
+        $parsed = preg_replace_callback('/{{{?([\w.]+)}}}?/', function($matches) use ($skeleton) {
+            return $skeleton->get($matches[1]);
+        }, $template);
+
+        return $parsed;
     }
 }

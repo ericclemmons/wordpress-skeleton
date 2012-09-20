@@ -25,9 +25,11 @@ class ConfigureSkeletonCommand extends SkeletonCommand
             throw new \Exception('This command must be ran interactively');
         }
 
+        $this->skeleton->setConfig($this->config);
+
         $output->writeln('Generating...');
 
-        $generated = $this->skeleton->generateSkeleton($this->config);
+        $generated = $this->skeleton->generate();
 
         foreach ($generated as $file) {
             $output->writeln(sprintf("\tGenerated <info>%s</info>", $file));

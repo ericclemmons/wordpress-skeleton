@@ -15,7 +15,7 @@ class Skeleton
     public function __construct($configPath)
     {
         $this->configPath   = $configPath;
-        $this->generator    = new Generator(__DIR__.'/Resources/skeleton', $this->getRoot());
+        $this->generator    = new Generator($this, __DIR__.'/Resources/skeleton', $this->getRoot());
 
         $this->initConfig();
     }
@@ -26,12 +26,7 @@ class Skeleton
             throw new \LogicException('Cannot generate skeleton without being configured first');
         }
 
-        return $this->generator->generateSkeleton($this->getConfig());
-    }
-
-    public function generateSkeleton(array $context)
-    {
-        return $this->generator->generateSkeleton($context);
+        return $this->generator->generateSkeleton();
     }
 
     public function get($property, $args = null)
@@ -120,5 +115,10 @@ class Skeleton
         $root = $value;
 
         return $this;
+    }
+
+    public function setConfig(array $config)
+    {
+        $this->config = $config;
     }
 }

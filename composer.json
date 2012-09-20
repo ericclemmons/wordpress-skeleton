@@ -29,8 +29,7 @@
         "cookbooks/openssl":        "dev-master",
         "cookbooks/php":            "dev-master",
         "symfony/console":          "dev-master",
-        "symfony/yaml":             "dev-master",
-        "weierophinney/phly_mustache": "dev-master"
+        "symfony/yaml":             "dev-master"
     },
 
     "repositories": [
@@ -150,23 +149,6 @@
                     "url":          "git://github.com/WordPress/WordPress.git",
                     "type":         "git",
                     "reference":    "master"
-                }
-            }
-        },
-        {
-            "type":                 "package",
-            "package": {
-                "name":             "weierophinney/phly_mustache",
-                "version":          "master",
-                "source": {
-                    "url":          "git://github.com/weierophinney/phly_mustache.git",
-                    "type":         "git",
-                    "reference":    "master"
-                },
-                "autoload": {
-                    "psr-0": {
-                        "Phly": "library/"
-                    }
                 }
             }
         }

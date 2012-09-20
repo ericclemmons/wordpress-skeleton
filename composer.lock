@@ -1,69 +1,14 @@
 {
-    "hash": "6c1c5b2b79c91220da1b6b38670e891e",
+    "hash": "a4acccbf785d1d7243a83b8a902c23b5",
     "packages": [
         {
             "package": "wordpress/wordpress",
             "version": "master",
             "source-reference": "master",
-            "commit-date": "1347080314"
+            "commit-date": "1348149579"
         }
     ],
-    "packages-dev": [
-        {
-            "package": "automattic/_s",
-            "version": "master",
-            "source-reference": "master",
-            "commit-date": "1346394020"
-        },
-        {
-            "package": "cookbooks/apache2",
-            "version": "master",
-            "source-reference": "master",
-            "commit-date": "1345305048"
-        },
-        {
-            "package": "cookbooks/apt",
-            "version": "master",
-            "source-reference": "master",
-            "commit-date": "1346429806"
-        },
-        {
-            "package": "cookbooks/mysql",
-            "version": "master",
-            "source-reference": "master",
-            "commit-date": "1345305110"
-        },
-        {
-            "package": "cookbooks/openssl",
-            "version": "master",
-            "source-reference": "master",
-            "commit-date": "1331206930"
-        },
-        {
-            "package": "cookbooks/php",
-            "version": "master",
-            "source-reference": "master",
-            "commit-date": "1346384264"
-        },
-        {
-            "package": "symfony/console",
-            "version": "master",
-            "source-reference": "master",
-            "commit-date": "1346957130"
-        },
-        {
-            "package": "symfony/yaml",
-            "version": "master",
-            "source-reference": "master",
-            "commit-date": "1346957130"
-        },
-        {
-            "package": "weierophinney/phly_mustache",
-            "version": "master",
-            "source-reference": "master",
-            "commit-date": "1343915507"
-        }
-    ],
+    "packages-dev": null,
     "aliases": [
 
     ],
@@ -77,7 +22,6 @@
         "cookbooks/openssl": 20,
         "cookbooks/php": 20,
         "symfony/console": 20,
-        "symfony/yaml": 20,
-        "weierophinney/phly_mustache": 20
+        "symfony/yaml": 20
     }
 }
