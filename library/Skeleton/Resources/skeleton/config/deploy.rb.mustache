@@ -19,6 +19,12 @@ after "deploy:setup" do
     run "#{try_sudo} chown #{user} #{dirs.join(' ')}"
 end
 
+after "deploy" do
+    files = Dir["src/**/*"].reject { |f| File.directory?(f) }
+    puts files
+    exit
+end
+
 
 namespace :deploy do
     task :cold do

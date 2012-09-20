@@ -14,18 +14,36 @@
  * @package WordPress
  */
 
+/** The name of the environment to pivot settings off of (defaults to 'prod') **/
+define('WP_ENV', array_search($_SERVER['HTTP_HOST'], array(
+    'local' => '{{deploy.local.web.host}}',
+    'stage' => '{{deploy.stage.web.host}}',
+)) ?: 'prod');
+
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define('DB_NAME', '{{wordpress.local.db.name}}');
+define('DB_NAME', array_search(WP_ENV, array(
+    'local' => '{{wordpress.local.db.name}}',
+    'stage' => '{{wordpress.stage.db.name}}',
+)) ?: '{{wordpress.prod.db.name}}');
 
 /** MySQL database username */
-define('DB_USER', '{{wordpress.local.db.user}}');
+define('DB_USER', array_search(WP_ENV, array(
+    'local' => '{{wordpress.local.db.user}}',
+    'stage' => '{{wordpress.stage.db.user}}',
+)) ?: '{{wordpress.prod.db.user}}');
 
 /** MySQL database password */
-define('DB_PASSWORD', '{{wordpress.local.db.password}}');
+define('DB_PASSWORD', array_search(WP_ENV, array(
+    'local' => '{{wordpress.local.db.password}}',
+    'stage' => '{{wordpress.stage.db.password}}',
+)) ?: '{{wordpress.prod.db.password}}');
 
 /** MySQL hostname */
-define('DB_HOST', '{{wordpress.local.db.host}}');
+define('DB_HOST', array_search(WP_ENV, array(
+    'local' => '{{wordpress.local.db.host}}',
+    'stage' => '{{wordpress.stage.db.host}}',
+)) ?: '{{wordpress.prod.db.host}}');
 
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8');
@@ -42,7 +60,18 @@ define('DB_COLLATE', '');
  *
  * @since 2.6.0
  */
-{{wordpress.salts}}
+switch (WP_ENV) {
+    case 'local':
+            {{wordpress.local.salts}}
+        break;
+
+    case 'stage':
+            {{wordpress.stage.salts}}
+        break;
+
+    default:
+            {{wordpress.prod.salts}}
+}
 
 /**#@-*/
 
@@ -71,7 +100,7 @@ define('WPLANG', '');
  * It is strongly recommended that plugin and theme developers use WP_DEBUG
  * in their development environments.
  */
-define('WP_DEBUG', true);
+define('WP_DEBUG', in_array(WP_ENV, array('local', 'stage')));
 
 /* That's all, stop editing! Happy blogging. */
 
