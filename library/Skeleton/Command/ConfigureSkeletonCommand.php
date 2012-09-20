@@ -47,7 +47,7 @@ class ConfigureSkeletonCommand extends SkeletonCommand
                 'local'             => array(
                     'salts'         => $this->guessSalts(),
                     'db'            => array(
-                        'name'      => 'wordpress',
+                        'name'      => 'wordpress_local',
                         'user'      => 'vagrant',
                         'password'  => 'vagrant',
                         'host'      => 'localhost',
@@ -171,7 +171,7 @@ class ConfigureSkeletonCommand extends SkeletonCommand
         $defaultHost        = $this->skeleton->get('wordpress.%s.db.host', $env) ?: 'localhost';
         $dbHost             = $dialog->ask($output, $dialog->getQuestion('Database Host', $defaultHost), $defaultHost);
 
-        $defaultDbName      = $this->skeleton->get('wordpress.%s.db.name', $env) ?: 'wordpress';
+        $defaultDbName      = $this->skeleton->get('wordpress.%s.db.name', $env) ?: 'wordpress_'.$env;
         $dbName             = $dialog->ask($output, $dialog->getQuestion('Database Name', $defaultDbName), $defaultDbName);
 
         $defaultDbUser      = $this->skeleton->get('wordpress.%s.db.user', $env) ?: $this->config['deploy'][$env]['db']['user'] ?: 'admin';
