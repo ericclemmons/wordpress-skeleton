@@ -42,6 +42,8 @@ class Validators
             throw new \Exception(sprintf('No configuration defined for deploy.%s in skeleton.yml', $env));
         }
 
+        putenv('WP_ENV='.$env);
+
         return $env;
     }
 
