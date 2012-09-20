@@ -46,7 +46,14 @@ class InstallWordpressCommand extends SkeletonCommand
 
         $output->write('Installing...');
 
-        $result = wp_install('WordPress Skeleton', $web['user'], '', false, '', $web['password']);
+        $result = wp_install(
+            $this->skeleton->get('name'),
+            $this->skeleton->get('deploy.%s.web.user', $env),
+            '',     // E-mail
+            true,   // Public
+            '',     // Deprecated
+            $this->skeleton->get('deploy.%s.web.password', $env)
+        );
 
         if (is_wp_error($result)) {
             throw new \Exception($result);
