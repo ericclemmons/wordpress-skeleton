@@ -64,6 +64,9 @@ After the skeleton is created, you can see the files it creates:
     # config/
     # src/
 
+    > git add Vagrantfile config src
+    > git commit -m "Initial Skeleton commit"
+
 
 - `Vagrantfile` defines your local VM's settings.
 - `config/` contains deployment scripts and `skeleton.yml`, which stores your options
