@@ -3,8 +3,8 @@ require "capistrano/ext/multistage"
 require "railsless-deploy"
 require "yaml"
 
-set :stage_dir,     "deploy"
-set :application,   "{{domain}}"
+set :stage_dir,         "deploy"
+set :application,       "{{domain}}"
 
 after "deploy:setup" do
     run "#{try_sudo} chown #{user} #{deploy_to}"

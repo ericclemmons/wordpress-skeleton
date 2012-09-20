@@ -11,6 +11,32 @@ namespace :wp do
         task :drop do
             run "#{latest_release}/skeleton wp:db:drop --env=#{stage}"
         end
+
+        desc "Backups database locally to /backups directory"
+        task :backup do
+            run "#{latest_release}/skeleton wp:db:backup --env=#{stage}"
+
+            set :backups_path,      "#{current_release}/backups"
+            set :current_backup,    capture("ls -t1 #{backups_path} | head -n1").chomp
+            set :backup_path,       File.dirname(File.dirname(__FILE__)) + "/backups/#{current_backup}"
+
+            download "#{backups_path}/#{current_backup}", backup_path
+
+            run_locally("gzip -d #{backup_path}")
+        end
+
+        desc "Restores latest local backup to remote database"
+        task :restore do
+            set :backups_path,      File.dirname(File.dirname(__FILE__)) + "/backups"
+            set :current_backup,    run_locally("ls -t1 #{backups_path} | head -n1").chomp
+            set :restore_path,       "#{current_release}/backups/restore.#{current_backup}"
+
+            if Capistrano::CLI.ui.ask("Are you sure restore the #{stage} database to #{current_backup}? (y/N) ") == 'y'
+                upload "#{backups_path}/#{current_backup}", restore_path
+
+                run "#{latest_release}/skeleton wp:db:restore --env=#{stage} --file=#{restore_path}"
+            end
+        end
     end
 
     namespace :config do
