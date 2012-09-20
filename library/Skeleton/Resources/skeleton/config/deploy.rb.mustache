@@ -6,16 +6,24 @@ set :application,       "{{domain}}"
 set :public_children,   []
 set :shared_children,   %w(web/wp-content/uploads)
 
+after "deploy:finalize_update", "wp:config:symlink"
+after "deploy:update_code",     "wp:theme:symlink"
+after "deploy:update_code",     "wp:plugins:install"
+
+after "deploy:update",          "wp:theme:activate"
+
 after "deploy:setup" do
-    run "#{try_sudo} chown #{user} #{deploy_to}"
+    dirs = [deploy_to, releases_path, shared_path]
+    dirs += shared_children.map { |d| File.join(shared_path, d.split('/').last) }
+
+    run "#{try_sudo} chown #{user} #{dirs.join(' ')}"
 end
 
-after "deploy:update_code", "wp:config:symlink", "wp:theme:symlink"
-after "deploy:update_code", "wp:plugins:install", "wp:theme:activate"
 
 namespace :deploy do
     task :cold do
-        after "deploy:update_code", "wp:db:create", "wp:install"
+        after "deploy:finalize_update", "wp:db:create"
+        after "deploy:finalize_update", "wp:install"
 
         setup
         update
