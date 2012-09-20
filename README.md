@@ -53,20 +53,8 @@ Setting Up Your Skeleton
 Saving Your Skeleton
 --------------------
 
-After the skeleton is created, you can see the files it creates:
-
-    > git status
-    ...
-    # Untracked files:
-    #   (use "git add <file>..." to include in what will be committed)
-    #
-    # Vagrantfile
-    # config/
-    # src/
-
     > git add Vagrantfile config src
     > git commit -m "Initial Skeleton commit"
-
 
 - `Vagrantfile` defines your local VM's settings.
 - `config/` contains deployment scripts and `skeleton.yml`, which stores your options
