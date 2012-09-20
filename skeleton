@@ -38,6 +38,7 @@ $skeleton   = new Skeleton(__DIR__.'/config/skeleton.yml');
 $commands   = array(
     new Command\ConfigureSkeletonCommand('configure'),
     new Command\GenerateSkeletonCommand('generate'),
+    new Command\InfoSkeletonCommand('info'),
     new Command\OpenSkeletonCommand('open'),
     new Command\CreateDatabaseWordPressCommand('wp:db:create'),
     new Command\DropDatabaseWordPressCommand('wp:db:drop'),

@@ -41,7 +41,8 @@ class ConfigureSkeletonCommand extends SkeletonCommand
         $dialog->writeSection($output, 'Welcome to the WordPress Skeleton Configurator!');
 
         // Initial Skeleton with local environment
-        $this->config = array_replace($this->askProjectInformation($input, $output), array(
+        $this->config = $this->askProjectInformation($input, $output);
+        $this->config += array(
             'wordpress'             => array(
                 'local'             => array(
                     'salts'         => $this->guessSalts(),
@@ -57,7 +58,7 @@ class ConfigureSkeletonCommand extends SkeletonCommand
                 'local'             => array(
                     'web'           => array(
                         'host'      => 'local.'.$this->config['domain'],
-                        'ip'        => $this->guessIp('local.'.$this->config['domain']),
+                        'ip'        => $this->skeleton->get('deploy.local.web.ip') ?: $this->guessIp('local.'.$this->config['domain']),
                         'user'      => 'vagrant',
                         'password'  => 'vagrant',
                     ),
@@ -67,7 +68,7 @@ class ConfigureSkeletonCommand extends SkeletonCommand
                     ),
                 ),
             ),
-        ));
+        );
 
         foreach (array('stage', 'prod') as $env) {
             $continue = $dialog->askConfirmation($output, $dialog->getQuestion(sprintf('Setup <info>%s</info> environment?', $env), 'y'));

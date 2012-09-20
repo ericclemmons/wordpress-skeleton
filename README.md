@@ -71,6 +71,10 @@ After the skeleton is created, you can see the files it creates:
 - `src/` houses your theme folder and is linked & activated within WordPress upon
   deployment.
 
+You can view your skeleton's configuration at anytime by viewing `config/skeleton.yml` or running
+
+    > ./skeleton info
+
 
 Local Development
 -----------------
