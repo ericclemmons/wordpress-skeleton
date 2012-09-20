@@ -15,7 +15,7 @@
  */
 
 /** The name of the environment to pivot settings off of (defaults to 'prod') **/
-define('WP_ENV', array_search($_SERVER['HTTP_HOST'], array(
+define('WP_ENV', getenv('WP_ENV') ?: array_search($_SERVER['HTTP_HOST'], array(
     'local' => '{{deploy.local.web.host}}',
     'stage' => '{{deploy.stage.web.host}}',
 )) ?: 'prod');
@@ -23,26 +23,26 @@ define('WP_ENV', array_search($_SERVER['HTTP_HOST'], array(
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 define('DB_NAME', array_search(WP_ENV, array(
-    'local' => '{{wordpress.local.db.name}}',
-    'stage' => '{{wordpress.stage.db.name}}',
+    '{{wordpress.local.db.name}}' => 'local',
+    '{{wordpress.stage.db.name}}' => 'stage',
 )) ?: '{{wordpress.prod.db.name}}');
 
 /** MySQL database username */
 define('DB_USER', array_search(WP_ENV, array(
-    'local' => '{{wordpress.local.db.user}}',
-    'stage' => '{{wordpress.stage.db.user}}',
+    '{{wordpress.local.db.user}}' => 'local',
+    '{{wordpress.stage.db.user}}' => 'stage',
 )) ?: '{{wordpress.prod.db.user}}');
 
 /** MySQL database password */
 define('DB_PASSWORD', array_search(WP_ENV, array(
-    'local' => '{{wordpress.local.db.password}}',
-    'stage' => '{{wordpress.stage.db.password}}',
+    '{{wordpress.local.db.password}}' => 'local',
+    '{{wordpress.stage.db.password}}' => 'stage',
 )) ?: '{{wordpress.prod.db.password}}');
 
 /** MySQL hostname */
 define('DB_HOST', array_search(WP_ENV, array(
-    'local' => '{{wordpress.local.db.host}}',
-    'stage' => '{{wordpress.stage.db.host}}',
+    '{{wordpress.local.db.host}}' => 'local',
+    '{{wordpress.stage.db.host}}' => 'stage',
 )) ?: '{{wordpress.prod.db.host}}');
 
 /** Database Charset to use in creating database tables. */

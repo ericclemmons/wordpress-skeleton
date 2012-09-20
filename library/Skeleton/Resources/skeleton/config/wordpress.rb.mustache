@@ -79,6 +79,25 @@ namespace :wp do
         end
     end
 
+    desc "Symlinks all resources in /src into /web"
+    task :symlink do
+        shared_files = Dir.chdir("src") do
+            Dir.glob("**/*").reject { |f| File.directory?(f) }
+        end
+
+        shared_files.each do |link|
+            basename    = File.basename(link)
+            wp_path     = Pathname.new("#{release_path}/vendor/wordpress/wordpress/#{link}")
+            wp_dir      = Pathname.new(File.dirname(wp_path))
+            src_path    = Pathname.new("#{release_path}/src/#{link}").relative_path_from(wp_dir)
+
+            run "mkdir -p #{wp_dir}"
+            run "cd #{wp_dir} && ln -nfs #{src_path} #{basename}"
+        end
+
+        wp.theme.symlink
+    end
+
     namespace :theme do
         desc "Activates theme"
         task :activate do
