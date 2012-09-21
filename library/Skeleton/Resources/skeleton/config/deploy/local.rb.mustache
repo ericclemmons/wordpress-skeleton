@@ -1,24 +1,10 @@
 role :server,               "{{deploy.local.web.host}}"
 
-set :copy_strategy,         :export
-set :copy_exclude,          [".git"]
-
-set :deploy_to,             "/var/www/#{application}"
-set :deploy_via,            :copy
-
-set :repository,            File.expand_path(File.dirname(__FILE__) + "/../../")
-
-set :scm,                   :none
-set :use_sudo,              true
-
 set :user,                  "{{deploy.local.web.user}}"
 set :password,              "{{deploy.local.web.password}}"
 
 # Disable shared children since we're symlinking to a real location
 set :shared_children,       []
-set :group_writable,        true
-
-default_run_options[:pty] = true
 
 namespace :deploy do
     task :update_code, :except => { :no_release => true } do

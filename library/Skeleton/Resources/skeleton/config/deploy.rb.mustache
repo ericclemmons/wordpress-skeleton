@@ -1,10 +1,20 @@
 require "capistrano/ext/multistage"
-require "yaml"
 
 set :stage_dir,         "deploy"
+
 set :application,       "{{domain}}"
+set :repository,        "{{repository}}"
+set :scm,               :git
+
+set :deploy_to,         "/var/www/#{application}"
+set :deploy_via,        :remote_cache
+set :group_writable,    true
+set :use_sudo,          true
+
 set :public_children,   []
 set :shared_children,   %w(web/wp-content/uploads)
+
+set :keep_releases,     5
 
 default_run_options[:pty] = true
 
