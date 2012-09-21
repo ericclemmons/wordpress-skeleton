@@ -4,7 +4,7 @@
   ServerAlias <% @params[:server_aliases].each do |a| %><%= "#{a}" %> <% end %>
 
   # Match *.my-site.com
-  VirtualDocumentRoot /var/www/%2+/current/web
+  VirtualDocumentRoot /var/www/local.%2+/current/web
 
   <Directory />
     Options +FollowSymLinks
