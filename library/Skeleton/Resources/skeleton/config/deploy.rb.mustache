@@ -6,6 +6,28 @@ set :application,       "{{domain}}"
 set :public_children,   []
 set :shared_children,   %w(web/wp-content/uploads)
 
+default_run_options[:pty] = true
+
+pretty_errors
+
+before "deploy:setup" do
+    pretty_print "Setting up deployment structure"
+end
+
+after "deploy:setup" do
+    puts_ok
+end
+
+before "deploy:update" do
+    pretty_print "Starting \"#{stage}\" deployment"
+    puts_ok
+end
+
+after "deploy:update" do
+    pretty_print "Finishing \"#{stage}\" deployment"
+    puts_ok
+end
+
 after "deploy:finalize_update", "wp:symlink"
 after "deploy:update_code",     "wp:plugins:install"
 after "deploy:update",          "wp:theme:activate"
@@ -26,24 +48,4 @@ namespace :deploy do
         update
         start
     end
-end
-
-pretty_errors
-
-before "deploy:setup" do
-    pretty_print "Setting up deployment structure"
-end
-
-after "deploy:setup" do
-    puts_ok
-end
-
-before "deploy:update" do
-    pretty_print "Starting \"#{stage}\" deployment"
-    puts_ok
-end
-
-after "deploy:update" do
-    pretty_print "Finishing \"#{stage}\" deployment"
-    puts_ok
 end
