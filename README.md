@@ -81,13 +81,13 @@ After doing it once, you can just do normal deployments, which will only update 
 
     > cap local deploy
 
-
 Open WordPress in your browser:
 
     > ./skeleton open
 
-
 Now you can make changes to `/src` and refresh!
+
+You can always view `skeleton.yml` or run `./skeleton info` for WordPress Admin credentials.
 
 
 Useful Commands
