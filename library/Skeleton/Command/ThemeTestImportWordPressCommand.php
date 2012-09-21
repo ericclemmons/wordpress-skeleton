@@ -33,11 +33,20 @@ class ThemeTestImportWordPressCommand extends SkeletonCommand
         require $root.'/wp-load.php';
         require ABSPATH.'wp-admin/includes/admin.php';
 
+        $error = activate_plugin('wordpress-importer/wordpress-importer.php');
+
+        if (is_wp_error($error)) {
+            throw new \Exception('WordPress Importer could not be activated.  Is it installed?');
+        }
+
         do_action('admin_init');
 
         // 0 - Name, 1 = Description, 2 = Callable
         $importer = $wp_importers['wordpress'][2][0];
 
+        if (empty($importer)) {
+            throw new \Exception('WordPress Importer could not be loaded');
+        }
 
         $url        = 'https://wpcom-themes.svn.automattic.com/demo/test-data.2011-01-17.xml';
         $name       = basename($url);
