@@ -35,6 +35,7 @@ namespace :wp do
                 upload "#{backups_path}/#{current_backup}", restore_path
 
                 run "#{latest_release}/skeleton wp:db:restore --env=#{stage} --file=#{restore_path}"
+                run "rm #{restore_path}"
             end
         end
     end

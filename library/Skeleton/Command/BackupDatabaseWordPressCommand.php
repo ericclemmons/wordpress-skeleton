@@ -27,11 +27,12 @@ class BackupDatabaseWordpressCommand extends SkeletonCommand
         $env    = Validators::validateEnv($input->getOption('env'));
         $path   = sprintf('%s/backups/%s.sql.gz', $this->skeleton->getRoot(), date('Y-m-d.his'));
 
-        $command = sprintf('mysqldump -u%s -p%s -h%s --opt --databases %s | gzip --rsyncable > %s',
+        $command = sprintf('mysqldump -u%s -p%s -h%s --opt --databases %s | sed %s | gzip --rsyncable > %s',
             escapeshellarg($this->skeleton->get('wordpress.%s.db.user', $env)),
             escapeshellarg($this->skeleton->get('wordpress.%s.db.password', $env)),
             escapeshellarg($this->skeleton->get('wordpress.%s.db.host', $env)),
             escapeshellarg($this->skeleton->get('wordpress.%s.db.name', $env)),
+            escapeshellarg(sprintf('s/%s/skeleton_backup/g', $this->skeleton->get('wordpress.%s.db.name', $env))),
             $path
         );
 

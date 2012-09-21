@@ -28,11 +28,12 @@ class RestoreDatabaseWordpressCommand extends SkeletonCommand
         $env    = Validators::validateEnv($input->getOption('env'));
         $path   = Validators::validatePath($input->getOption('file'));
 
-        $command = sprintf('mysql -u%s -p%s -h%s < %s',
+        $command = sprintf('cat %s | sed %s | mysql -u%s -p%s -h%s',
+            $path,
+            escapeshellarg(sprintf('s/skeleton_backup/%s/g', $this->skeleton->get('wordpress.%s.db.name', $env))),
             escapeshellarg($this->skeleton->get('deploy.%s.db.user', $env)),
             escapeshellarg($this->skeleton->get('deploy.%s.db.password', $env)),
-            escapeshellarg($this->skeleton->get('wordpress.%s.db.host', $env)),
-            $path
+            escapeshellarg($this->skeleton->get('wordpress.%s.db.host', $env))
         );
 
         $output->writeln(sprintf('Running <info>%s</info>', $command));
