@@ -27,3 +27,23 @@ namespace :deploy do
         start
     end
 end
+
+pretty_errors
+
+before "deploy:setup" do
+    pretty_print "Setting up deployment structure"
+end
+
+after "deploy:setup" do
+    puts_ok
+end
+
+before "deploy:update" do
+    pretty_print "Starting \"#{stage}\" deployment"
+    puts_ok
+end
+
+after "deploy:update" do
+    pretty_print "Finishing \"#{stage}\" deployment"
+    puts_ok
+end

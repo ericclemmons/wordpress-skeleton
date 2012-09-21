@@ -31,5 +31,7 @@ class GenerateSkeletonCommand extends SkeletonCommand
         } else {
             throw new \Exception(sprintf('Config not found.  Did you run `configure`?', $path));
         }
+
+        $output->writeln('');
     }
 }
