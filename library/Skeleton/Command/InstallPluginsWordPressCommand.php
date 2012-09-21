@@ -88,12 +88,10 @@ class InstallPluginsWordPressCommand extends SkeletonCommand
 
                     break;
             }
+        }
 
-            $output->writeln(sprintf('Activating <info>%s</info>...', $plugin->name));
-
-            $file = sprintf('%s/%s', $slug, key(get_plugins("/$slug")));
-
-            activate_plugin($file);
+        if ($plugins) {
+            $output->writeln(sprintf('<info>Activate plugins in the WordPress Admin</info>', $plugin->name));
         }
     }
 }
