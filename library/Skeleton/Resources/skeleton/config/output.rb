@@ -4,8 +4,7 @@ STDOUT.sync
 $error = false
 $pretty_errors_defined = false
 
-# Be less verbose by default
-logger.level = Logger::IMPORTANT
+logger.level = Logger::IMPORTANT if logger.level > 1
 
 def pretty_print(msg)
   if logger.level == Logger::IMPORTANT
@@ -27,7 +26,7 @@ def puts_ok
 end
 
 def pretty_errors
-  if !$pretty_errors_defined
+  if !$pretty_errors_defined and logger.level < 1
     $pretty_errors_defined = true
 
     class << $stderr
