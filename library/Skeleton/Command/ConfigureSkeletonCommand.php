@@ -42,12 +42,23 @@ class ConfigureSkeletonCommand extends SkeletonCommand
 
         $dialog->writeSection($output, 'Welcome to the WordPress Skeleton Configurator!');
 
+        $output->writeln(array(
+            "First things first, let's get some information about your project.",
+            "I'll try to guess as much as I can!",
+            '',
+        ));
+
         // Initial Skeleton with local environment
         $this->config = $this->askProjectInformation($input, $output);
         $this->config += array(
             'wordpress'             => array(
                 'local'             => array(
                     'salts'         => $this->guessSalts(),
+                    'admin'         => array(
+                        'user'      => 'vagrant',
+                        'password'  => 'vagrant',
+                        'email'     => '',
+                    ),
                     'db'            => array(
                         'name'      => 'wordpress_local',
                         'user'      => 'vagrant',
@@ -73,7 +84,7 @@ class ConfigureSkeletonCommand extends SkeletonCommand
         );
 
         foreach (array('stage', 'prod') as $env) {
-            $continue = $dialog->askConfirmation($output, $dialog->getQuestion(sprintf('Setup <info>%s</info> environment?', $env), 'y'));
+            $continue = $dialog->askConfirmation($output, $dialog->getQuestion(sprintf('Would you like to setup the <info>%s</info> environment?', $env), 'y'));
 
             if (!$continue) {
                 continue;
@@ -99,7 +110,13 @@ class ConfigureSkeletonCommand extends SkeletonCommand
     {
         $dialog = $this->getDialogHelper();
 
-        $dialog->writeSection($output, sprintf('%s SSH Connection Settings', ucfirst($env)));
+        $dialog->writeSection($output, sprintf('%s Connection Settings', ucfirst($env)));
+
+        $output->writeln(array(
+            "First, I'll need to get your SSH credentials when deploying to $env.",
+            "Typically this is public-facing login & domain used for FTP & SSH.",
+            ''
+        ));
 
         $defaultHost        = $this->skeleton->get('deploy.%s.web.host', $env) ?: sprintf('%s.%s', ($env === 'prod') ? 'www' : $env, $this->config['domain']);
         $webHost            = $dialog->askAndValidate($output, $dialog->getQuestion('Host Name', $defaultHost), array('Skeleton\Command\Validators', 'validateHost'), false, $defaultHost);
@@ -115,13 +132,26 @@ class ConfigureSkeletonCommand extends SkeletonCommand
 
         $dialog->writeSection($output, sprintf('%s Database Administration Settings', ucfirst($env)));
 
+        $output->writeln(array(
+            '',
+            "Finally, I'll need your database administrator's credentials.",
+            "Don't worry, this is only used when creating, dropping, backing",
+            "up, and restoring the database.  WordPress will be using a different",
+            "user (if you have one).",
+            ''
+        ));
+
         $defaultDbUser      = $this->skeleton->get('deploy.%s.db.user', $env) ?: $webUser;
         $dbUser             = $dialog->ask($output, $dialog->getQuestion('Database Administrator User', $defaultDbUser), $defaultDbUser);
 
         $defaultDbPassword  = $this->skeleton->get('deploy.%s.db.password', $env) ?: $webPassword;
         $dbPassword         = $dialog->ask($output, $dialog->getQuestion('Database Administrator Password', $defaultDbPassword), $defaultDbPassword);
 
-        $output->writeln('');
+        $output->writeln(array(
+            '',
+            "All done with the deployment information!",
+            '',
+        ));
 
         return array(
             'web'   => array(
@@ -168,7 +198,30 @@ class ConfigureSkeletonCommand extends SkeletonCommand
     {
         $dialog = $this->getDialogHelper();
 
-        $dialog->writeSection($output, sprintf('%s WordPress Settings (wp-config.php)', ucfirst($env)));
+        $dialog->writeSection($output, sprintf('%s WordPress Settings', ucfirst($env)));
+
+        $output->writeln(array(
+            "Next I'll need the WordPress Admin's credentails.",
+            '',
+        ));
+
+        $defaultUser        = $this->skeleton->get('wordpress.%s.admin.user', $env) ?: 'admin';
+        $user               = $dialog->ask($output, $dialog->getQuestion('Admin User', $defaultUser), $defaultUser);
+
+        $defaultPassword    = $this->skeleton->get('wordpress.%s.admin.password', $env) ?: $this->skeleton->get('deploy.%s.db.password', $env) ?: $this->guessPassword();
+        $password           = $dialog->ask($output, $dialog->getQuestion('Admin Password', $defaultPassword), $defaultPassword);
+
+        $defaultEmail       = $this->skeleton->get('wordpress.%s.admin.email', $env) ?: sprintf('%s@%s', $user, $this->config['domain']);
+        $email              = $dialog->ask($output, $dialog->getQuestion('Admin E-mail', $defaultEmail), $defaultEmail);
+
+        $output->writeln(array(
+            '',
+            "Finally, we need to give WordPress access to your database.",
+            'This is usually stored in "wp-config.php". You should',
+            'also use different database user with limited permissions',
+            'for improved security.',
+            '',
+        ));
 
         $defaultHost        = $this->skeleton->get('wordpress.%s.db.host', $env) ?: 'localhost';
         $dbHost             = $dialog->ask($output, $dialog->getQuestion('Database Host', $defaultHost), $defaultHost);
@@ -176,16 +229,21 @@ class ConfigureSkeletonCommand extends SkeletonCommand
         $defaultDbName      = $this->skeleton->get('wordpress.%s.db.name', $env) ?: 'wordpress_'.$env;
         $dbName             = $dialog->ask($output, $dialog->getQuestion('Database Name', $defaultDbName), $defaultDbName);
 
-        $defaultDbUser      = $this->skeleton->get('wordpress.%s.db.user', $env) ?: $this->config['deploy'][$env]['db']['user'] ?: 'admin';
+        $defaultDbUser      = $this->skeleton->get('wordpress.%s.db.user', $env) ?: $this->skeleton->get('deploy.%s.db.user', $env) ?: 'admin';
         $dbUser             = $dialog->ask($output, $dialog->getQuestion('Database User', $defaultDbUser), $defaultDbUser);
 
-        $defaultDbPassword  = $this->skeleton->get('wordpress.%s.db.password', $env) ?: $this->config['deploy'][$env]['db']['password'] ?: $this->guessPassword();
+        $defaultDbPassword  = $this->skeleton->get('wordpress.%s.db.password', $env) ?: $this->skeleton->get('deploy.%s.db.password', $env) ?: $this->guessPassword();
         $dbPassword         = $dialog->ask($output, $dialog->getQuestion('Database Password', $defaultDbPassword), $defaultDbPassword);
 
         $output->writeln('');
 
         return array(
             'salts'         => $this->skeleton->get('wordpress.%s.salts', $env) ?: $this->guessSalts(),
+            'admin'         => array(
+                'user'      => $user,
+                'password'  => $password,
+                'email'     => $email,
+            ),
             'db'            => array(
                 'name'      => $dbName,
                 'user'      => $dbUser,

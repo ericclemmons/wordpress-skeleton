@@ -4,15 +4,15 @@
 #   Run "./skeleton generate" after making changes
 ##
 name:                                   {{name}}
-description:                            {{{description}}}
-author:                                 {{{author}}}
+description:                            {{description}}
+author:                                 {{author}}
 domain:                                 {{domain}}
 
 
 ##
 #   Deployment & source repository
 ##
-repository:                             {{{repository}}}
+repository:                             {{repository}}
 
 
 ##
@@ -23,14 +23,20 @@ wordpress:
     local:
         # See: https://api.wordpress.org/secret-key/1.1/salt/
         salts:  |
-            {{{wordpress.local.salts}}}
+            {{wordpress.local.salts}}
+
+        # Admin user
+        admin:
+            user:                       {{wordpress.local.admin.user}}
+            password:                   {{wordpress.local.admin.password}}
+            email:                      {{wordpress.local.admin.email}}
 
         # Limited DB user with WordPress-only permissions (no GRANT/CREATE/DROP)
         db:
             host:                       {{wordpress.local.db.host}}
             name:                       {{wordpress.local.db.name}}
             user:                       {{wordpress.local.db.user}}
-            password:                   {{{wordpress.local.db.password}}}
+            password:                   {{wordpress.local.db.password}}
 
         # WordPress plugins installed & updated (as needed) with each deployment
         plugins:
@@ -41,12 +47,16 @@ wordpress:
     # Production-like environment to test theme against real content & bugs
     stage:
         salts:  |
-            {{{wordpress.stage.salts}}}
+            {{wordpress.stage.salts}}
+        admin:
+            user:                       {{wordpress.stage.admin.user}}
+            password:                   {{wordpress.stage.admin.password}}
+            email:                      {{wordpress.stage.admin.email}}
         db:
             host:                       {{wordpress.stage.db.host}}
             name:                       {{wordpress.stage.db.name}}
             user:                       {{wordpress.stage.db.user}}
-            password:                   {{{wordpress.stage.db.password}}}
+            password:                   {{wordpress.stage.db.password}}
 
         plugins:
             wordpress-importer:         ~
@@ -54,12 +64,16 @@ wordpress:
     # Production environment, the destination domain for the site
     prod:
         salts:  |
-            {{{wordpress.prod.salts}}}
+            {{wordpress.prod.salts}}
+        admin:
+            user:                       {{wordpress.prod.admin.user}}
+            password:                   {{wordpress.prod.admin.password}}
+            email:                      {{wordpress.prod.admin.email}}
         db:
             host:                       {{wordpress.prod.db.host}}
             name:                       {{wordpress.prod.db.name}}
             user:                       {{wordpress.prod.db.user}}
-            password:                   {{{wordpress.prod.db.password}}}
+            password:                   {{wordpress.prod.db.password}}
 
         plugins:
             wordpress-importer:         ~
@@ -75,28 +89,28 @@ deploy:
             host:                       {{deploy.local.web.host}}
             ip:                         {{deploy.local.web.ip}}
             user:                       {{deploy.local.web.user}}
-            password:                   {{{deploy.local.web.password}}}
+            password:                   {{deploy.local.web.password}}
 
         # Admin DB user for wordpress.[env].db.host with CREATE/DROP permissions
         db:
             user:                       {{deploy.local.db.user}}
-            password:                   {{{deploy.local.db.password}}}
+            password:                   {{deploy.local.db.password}}
     stage:
         web:
             host:                       {{deploy.stage.web.host}}
             ip:                         {{deploy.stage.web.ip}}
             user:                       {{deploy.stage.web.user}}
-            password:                   {{{deploy.stage.web.password}}}
+            password:                   {{deploy.stage.web.password}}
         db:
             user:                       {{deploy.stage.db.user}}
-            password:                   {{{deploy.stage.db.password}}}
+            password:                   {{deploy.stage.db.password}}
 
     prod:
         web:
             host:                       {{deploy.prod.web.host}}
             ip:                         {{deploy.prod.web.ip}}
             user:                       {{deploy.prod.web.user}}
-            password:                   {{{deploy.prod.web.password}}}
+            password:                   {{deploy.prod.web.password}}
         db:
             user:                       {{deploy.prod.db.user}}
-            password:                   {{{deploy.prod.db.password}}}
+            password:                   {{deploy.prod.db.password}}

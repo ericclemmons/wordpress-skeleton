@@ -22,17 +22,14 @@ class InstallWordpressCommand extends SkeletonCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $env    = Validators::validateEnv($input->getOption('env'));
-        $web    = $this->skeleton->get(sprintf('deploy.%s.web', $env));
-        $db     = $this->skeleton->get(sprintf('wordpress.%s.db', $env));
-        $root   = realpath(__DIR__.'/../../../web');
+        $env = Validators::validateEnv($input->getOption('env'));
 
         $_SERVER['DOCUMENT_ROOT']   = getcwd();
         $_SERVER['SERVER_PROTOCOL'] = 'http';
-        $_SERVER['HTTP_HOST']       = $web['host'];
+        $_SERVER['HTTP_HOST']       = $this->skeleton->get('deploy.%s.web.host', $env);
 
 
-        define('WP_ROOT', $root.'/');
+        define('WP_ROOT', $this->skeleton->getWebRoot().'/');
         define('WP_INSTALLING', true);
 
         require WP_ROOT.'wp-load.php';
@@ -49,11 +46,11 @@ class InstallWordpressCommand extends SkeletonCommand
 
         $result = wp_install(
             $this->skeleton->get('name'),
-            $this->skeleton->get('deploy.%s.web.user', $env),
-            '',     // E-mail
+            $this->skeleton->get('wordpress.%s.admin.user', $env),
+            $this->skeleton->get('wordpress.%s.admin.email', $env),
             true,   // Public
             '',     // Deprecated
-            $this->skeleton->get('deploy.%s.web.password', $env)
+            $this->skeleton->get('wordpress.%s.admin.password', $env)
         );
 
         if (is_wp_error($result)) {
@@ -65,6 +62,9 @@ class InstallWordpressCommand extends SkeletonCommand
 
         $output->writeln('<info>DONE</info>');
 
-        $output->writeln(sprintf("\nLogin as <info>%s</info> with the password <info>%s</info>", $web['user'], $web['password']));
+        $output->writeln(sprintf("\nLogin as <info>%s</info> with the password <info>%s</info>",
+            $this->skeleton->get('wordpress.%s.admin.user', $env),
+            $this->skeleton->get('wordpress.%s.admin.password', $env)
+        ));
     }
 }
