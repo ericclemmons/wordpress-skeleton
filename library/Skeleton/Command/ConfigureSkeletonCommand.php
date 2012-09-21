@@ -84,7 +84,7 @@ class ConfigureSkeletonCommand extends SkeletonCommand
         );
 
         foreach (array('stage', 'prod') as $env) {
-            $continue = $dialog->askConfirmation($output, $dialog->getQuestion(sprintf('Would you like to setup the <info>%s</info> environment?', $env), 'n'));
+            $continue = $dialog->askConfirmation($output, $dialog->getQuestion(sprintf('Would you like to setup the <info>%s</info> environment?', $env), 'n'), false);
 
             if (!$continue) {
                 continue;
