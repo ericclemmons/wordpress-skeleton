@@ -9,7 +9,7 @@ set :scm,               :git
 set :deploy_to,         "/var/www/#{application}"
 set :deploy_via,        :remote_cache
 set :group_writable,    true
-set :use_sudo,          true
+set :use_sudo,          false
 
 set :public_children,   []
 set :shared_children,   %w(web/wp-content/uploads)
