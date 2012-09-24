@@ -83,7 +83,7 @@ class ConfigureSkeletonCommand extends SkeletonCommand
             ),
         );
 
-        foreach (array('stage', 'prod') as $env) {
+        foreach (array('staging', 'prod') as $env) {
             $continue = $dialog->askConfirmation($output, $dialog->getQuestion(sprintf('Would you like to setup the <info>%s</info> environment?', $env), 'n'), false);
 
             if (!$continue) {
@@ -275,11 +275,6 @@ class ConfigureSkeletonCommand extends SkeletonCommand
         );
 
         return $domain;
-    }
-
-    private function getEnvs()
-    {
-        return array('local', 'stage', 'prod');
     }
 
     private function guessIp($host = null)

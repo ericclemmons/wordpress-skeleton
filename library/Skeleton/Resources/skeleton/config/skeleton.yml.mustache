@@ -45,18 +45,18 @@ wordpress:
             wordpress-importer:         ~
 
     # Production-like environment to test theme against real content & bugs
-    stage:
+    staging:
         salts:  |
-            {{wordpress.stage.salts}}
+            {{wordpress.staging.salts}}
         admin:
-            user:                       {{wordpress.stage.admin.user}}
-            password:                   {{wordpress.stage.admin.password}}
-            email:                      {{wordpress.stage.admin.email}}
+            user:                       {{wordpress.staging.admin.user}}
+            password:                   {{wordpress.staging.admin.password}}
+            email:                      {{wordpress.staging.admin.email}}
         db:
-            host:                       {{wordpress.stage.db.host}}
-            name:                       {{wordpress.stage.db.name}}
-            user:                       {{wordpress.stage.db.user}}
-            password:                   {{wordpress.stage.db.password}}
+            host:                       {{wordpress.staging.db.host}}
+            name:                       {{wordpress.staging.db.name}}
+            user:                       {{wordpress.staging.db.user}}
+            password:                   {{wordpress.staging.db.password}}
 
         plugins:
             wordpress-importer:         ~
@@ -95,15 +95,15 @@ deploy:
         db:
             user:                       {{deploy.local.db.user}}
             password:                   {{deploy.local.db.password}}
-    stage:
+    staging:
         web:
-            host:                       {{deploy.stage.web.host}}
-            ip:                         {{deploy.stage.web.ip}}
-            user:                       {{deploy.stage.web.user}}
-            password:                   {{deploy.stage.web.password}}
+            host:                       {{deploy.staging.web.host}}
+            ip:                         {{deploy.staging.web.ip}}
+            user:                       {{deploy.staging.web.user}}
+            password:                   {{deploy.staging.web.password}}
         db:
-            user:                       {{deploy.stage.db.user}}
-            password:                   {{deploy.stage.db.password}}
+            user:                       {{deploy.staging.db.user}}
+            password:                   {{deploy.staging.db.password}}
 
     prod:
         web:
