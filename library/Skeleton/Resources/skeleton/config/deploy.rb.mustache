@@ -33,13 +33,24 @@ before "deploy:update" do
     puts_ok
 end
 
+before "deploy:update_code" do
+  msg = "Updating code base with via #{deploy_via}"
+
+  if logger.level == Logger::IMPORTANT
+    pretty_errors
+    puts msg
+  else
+    puts msg.green
+  end
+end
+
 after "deploy:update" do
     pretty_print "Finishing \"#{stage}\" deployment"
     puts_ok
 end
 
 after "deploy:finalize_update", "wp:symlink"
-after "deploy:update_code",     "wp:plugins:install"
+after "deploy:update",          "wp:plugins:install"
 after "deploy:update",          "wp:theme:activate"
 
 after "deploy:setup" do
