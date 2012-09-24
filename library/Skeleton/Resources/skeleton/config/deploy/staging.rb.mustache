@@ -1,0 +1,6 @@
+role :server,               "{{deploy.staging.web.host}}"
+
+set :deploy_to,             "/var/www/#{stage}.#{application}"
+
+set :user,                  "{{deploy.staging.web.user}}"
+set :password,              "{{deploy.staging.web.password}}"

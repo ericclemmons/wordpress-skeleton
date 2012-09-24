@@ -1,5 +1,7 @@
 role :server,               "{{deploy.local.web.host}}"
 
+set :deploy_to,             "/var/www/#{stage}.#{application}"
+
 set :user,                  "{{deploy.local.web.user}}"
 set :password,              "{{deploy.local.web.password}}"
 
