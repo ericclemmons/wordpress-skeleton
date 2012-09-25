@@ -31,7 +31,9 @@ if (!file_exists(__DIR__.'/vendor/autoload.php')) {
             passthru($command, $error);
 
             if ($error) {
-                die(sprintf("Failed to install Composer [%s]\n", $error));
+                throw new \Exception('"%s" failed: [%s]', $command, $error);
+
+                return 1;
             }
         }
     }
