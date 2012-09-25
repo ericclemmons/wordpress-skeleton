@@ -51,7 +51,7 @@ end
 
 after "deploy:finalize_update" do
     pretty_print "Loading WordPress Skeleton console"
-    run "#{try_sudo} #{latest_release}/skeleton --version"
+    run "cd #{latest_release} && #{try_sudo} ./skeleton"
     puts_ok
 end
 
