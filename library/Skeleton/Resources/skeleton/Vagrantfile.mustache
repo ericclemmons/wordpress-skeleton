@@ -10,8 +10,8 @@ Vagrant::Config.run do |config|
   config.vm.share_folder("v-root", "/vagrant", ".", :nfs => true)
 
   config.vm.provision :chef_solo do |chef|
-    chef.cookbooks_path = ["library/Skeleton/Cookbooks", "vendor/cookbooks"]
+    chef.cookbooks_path = ["config/cookbooks", "vendor/cookbooks"]
 
-    chef.add_recipe("wordpress-skeleton");
+    chef.add_recipe("{{deploy.local.web.host}}");
   end
 end
