@@ -1,0 +1,22 @@
+<VirtualHost *:80>
+
+  ServerName {{deploy.local.web.host}}
+
+  VirtualDocumentRoot /var/www/{{deploy.local.web.host}}/current/web
+
+  <Directory />
+    Options +FollowSymLinks
+    AllowOverride FileInfo Options
+    Order allow,deny
+    Allow from all
+  </Directory>
+
+  LogLevel debug
+  ErrorLog ${APACHE_LOG_DIR}/{{deploy.local.web.host}}-error.log
+  CustomLog ${APACHE_LOG_DIR}/{{deploy.local.web.host}}-access.log combined
+
+  RewriteEngine On
+  RewriteLog ${APACHE_LOG_DIR}/{{deploy.local.web.host}}-rewrite.log
+  RewriteLogLevel 0
+
+</VirtualHost>

@@ -44,8 +44,13 @@ class Generator
                 $contents = $this->parse($contents);
             }
 
-            $target     = $this->parse(sprintf('%s/%s', $this->destination, $template));
-            $parentDir  = dirname($target);
+            $target = $this->parse(sprintf('%s/%s', $this->destination, $template));
+
+            if (is_dir($target)) {
+                continue;
+            }
+
+            $parentDir = dirname($target);
 
             if (!is_dir($parentDir) && !mkdir($parentDir, 0775, true)) {
                 throw new \Exception('Unable to create directory '.$parentDir);
