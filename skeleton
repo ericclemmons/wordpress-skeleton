@@ -31,7 +31,7 @@ if (!file_exists(__DIR__.'/vendor/autoload.php')) {
             passthru($command, $error);
 
             if ($error) {
-                throw new \Exception('"%s" failed: [%s]', $command, $error);
+                throw new \Exception(sprintf('"%s" failed: [%s]', $command, $error));
 
                 return 1;
             }
