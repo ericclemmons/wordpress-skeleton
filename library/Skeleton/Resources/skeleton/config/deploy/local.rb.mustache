@@ -5,6 +5,8 @@ set :deploy_to,             "/var/www/#{stage}.#{application}"
 set :user,                  "{{deploy.local.web.user}}"
 set :password,              "{{deploy.local.web.password}}"
 
+set :use_sudo,              true
+
 # Disable shared children since we're symlinking to a real location
 set :shared_children,       []
 
