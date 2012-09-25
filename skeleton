@@ -9,6 +9,14 @@ use Symfony\Component\Console\Application;
 if (!file_exists(__DIR__.'/vendor/autoload.php')) {
     echo "Slow down there, buddy!  We have to install Composer & some ruby gems first!\n";
 
+    $gemPath = trim(`which gem`);
+
+    if (empty($gemPath)) {
+        throw new \Exception('You must install rubygems first. (sudo aptitude install rubygems)');
+
+        return 1;
+    }
+
     $interpreter    = 'php -d detect_unicode=Off';
     $commands       = array(
         sprintf('curl -s http://getcomposer.org/installer | %s -- %s', $interpreter, __DIR__)   => !file_exists(__DIR__.'/composer.phar'),
