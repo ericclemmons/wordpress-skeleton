@@ -89,6 +89,12 @@ namespace :deploy do
         puts_ok
     end
 
+    task :stop, :roles => :web do
+        pretty_print "Stopping Apache"
+        invoke_command "/etc/init.d/apache2 stop"
+        puts_ok
+    end
+
     task :vhost do
         source  = "#{latest_release}/config/vhost/{{deploy.local.web.host}}"
         target  = "/etc/apache2/sites-enabled/{{deploy.local.web.host}}"
