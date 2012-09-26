@@ -45,6 +45,12 @@ before "deploy:update_code" do
 end
 
 after "deploy:update" do
+    pretty_print "Reloading Apache"
+    run "#{try_sudo} /etc/init.d/apache2 reload"
+    puts_ok
+end
+
+after "deploy:update" do
     pretty_print "Finishing \"#{stage}\" deployment"
     puts_ok
 end
@@ -55,6 +61,7 @@ after "deploy:finalize_update" do
     puts_ok
 end
 
+after "deploy:finalize_update", "deploy:vhost"
 after "deploy:finalize_update", "wp:symlink"
 after "deploy:update",          "wp:plugins:install"
 after "deploy:update",          "wp:theme:activate"
@@ -74,5 +81,14 @@ namespace :deploy do
         setup
         update
         start
+    end
+
+    task :vhost do
+        source  = "#{releases_path}/config/vhost/{{deploy.local.web.host}}"
+        target  = "/etc/apache2/sites-enabled/{{deploy.local.web.host}}"
+
+        pretty_print "Symlinking {{deploy.local.web.host}} vhost"
+        run "#{try_sudo} ln -nfs #{source} #{target}"
+        puts_ok
     end
 end

@@ -16,11 +16,3 @@ apache_module "rewrite"
 apache_site "000-default" do
   enable false
 end
-
-# Create WordPress vhost
-link "#{node['apache']['dir']}/sites-available/{{deploy.local.web.host}}" do
-    to "/var/www/{{deploy.local.web.host}}/current/config/vhost/{{deploy.local.web.host}}"
-end
-
-# Activate WordPress vhost
-apache_site "{{deploy.local.web.host}}"
