@@ -1,4 +1,4 @@
-role :server,               "{{deploy.staging.web.host}}"
+role :web,                  "{{deploy.staging.web.host}}"
 
 set :deploy_to,             "/var/www/#{stage}.#{application}"
 
