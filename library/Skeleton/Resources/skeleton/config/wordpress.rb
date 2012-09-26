@@ -116,14 +116,14 @@ namespace :wp do
             set :wordpress_path,    Pathname.new("#{latest_release}/vendor/wordpress/wordpress")
             set :themes_path,       Pathname.new("#{wordpress_path}/wp-content/themes")
             set :_s_path,           Pathname.new("#{latest_release}/vendor/automattic/_s").relative_path_from(themes_path)
-            set :src_path,          Pathname.new("#{latest_release}/src").relative_path_from(themes_path)
+            set :theme_path,        Pathname.new("#{latest_release}/src/wp-content/themes/#{application}").relative_path_from(themes_path)
 
             pretty_print "Symlinking _s parent theme"
-            run "cd #{themes_path} && ln -fs #{_s_path} _s"
+            run "cd #{themes_path} && ln -nfs #{_s_path} _s"
             puts_ok
 
             pretty_print "Symlinking #{application} child theme"
-            run "cd #{themes_path} && ln -fs #{src_path} #{application}"
+            run "cd #{themes_path} && ln -nfs #{theme_path} #{application}"
             puts_ok
         end
     end
