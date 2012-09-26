@@ -45,26 +45,20 @@ before "deploy:update_code" do
 end
 
 after "deploy:update" do
-    pretty_print "Reloading Apache"
-    run "#{try_sudo} /etc/init.d/apache2 reload"
-    puts_ok
-end
-
-after "deploy:update" do
     pretty_print "Finishing \"#{stage}\" deployment"
     puts_ok
 end
 
-after "deploy:finalize_update" do
-    pretty_print "Loading WordPress Skeleton console"
-    run "cd #{latest_release} && #{try_sudo} ./skeleton"
-    puts_ok
-end
-
-after "deploy:finalize_update", "deploy:vhost"
 after "deploy:finalize_update", "wp:symlink"
 after "deploy:update",          "wp:plugins:install"
 after "deploy:update",          "wp:theme:activate"
+after "deploy:update",          "deploy:vhost"
+
+after "deploy:finalize_update" do
+    pretty_print "Loading WordPress Skeleton"
+    run "cd #{latest_release} && #{try_sudo} ./skeleton"
+    puts_ok
+end
 
 after "deploy:setup" do
     dirs = [deploy_to, releases_path, shared_path]
@@ -83,8 +77,20 @@ namespace :deploy do
         start
     end
 
+    task :restart, :roles => :web do
+        pretty_print "Gracefully restarting Apache"
+        invoke_command "/etc/init.d/apache2 graceful"
+        puts_ok
+    end
+
+    task :start, :roles => :web do
+        pretty_print "Starting Apache"
+        invoke_command "/etc/init.d/apache2 start"
+        puts_ok
+    end
+
     task :vhost do
-        source  = "#{releases_path}/config/vhost/{{deploy.local.web.host}}"
+        source  = "#{latest_release}/config/vhost/{{deploy.local.web.host}}"
         target  = "/etc/apache2/sites-enabled/{{deploy.local.web.host}}"
 
         pretty_print "Symlinking {{deploy.local.web.host}} vhost"
