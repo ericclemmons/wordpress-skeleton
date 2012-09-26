@@ -96,10 +96,11 @@ namespace :deploy do
     end
 
     task :vhost do
-        source  = "#{latest_release}/config/vhost/{{deploy.local.web.host}}"
-        target  = "/etc/apache2/sites-enabled/{{deploy.local.web.host}}"
+        vhost   = "#{stage}.#{application}"
+        source  = "#{latest_release}/config/vhost/#{vhost}"
+        target  = "/etc/apache2/sites-enabled/#{vhost}"
 
-        pretty_print "Symlinking {{deploy.local.web.host}} vhost"
+        pretty_print "Symlinking #{stage} vhost"
         run "#{try_sudo} ln -nfs #{source} #{target}"
         puts_ok
     end
