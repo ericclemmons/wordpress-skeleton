@@ -84,6 +84,8 @@ namespace :wp do
 
     desc "Symlinks all resources in /src into /web"
     task :symlink do
+        wp.theme.symlink
+
         shared_files = Dir.chdir("src") do
             Dir.glob("**/*").reject { |f| File.directory?(f) }
         end
@@ -99,8 +101,6 @@ namespace :wp do
             run "cd #{wp_dir} && ln -nfs #{src_path} #{basename}"
         end
         puts_ok
-
-        wp.theme.symlink
     end
 
     namespace :theme do
