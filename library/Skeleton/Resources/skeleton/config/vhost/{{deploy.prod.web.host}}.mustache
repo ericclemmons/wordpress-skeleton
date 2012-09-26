@@ -14,11 +14,11 @@
   </Directory>
 
   LogLevel debug
-  ErrorLog ${APACHE_LOG_DIR}/{{deploy.prod.web.host}}-error.log
-  CustomLog ${APACHE_LOG_DIR}/{{deploy.prod.web.host}}-access.log combined
+  ErrorLog /var/log/apache2/{{deploy.prod.web.host}}-error.log
+  CustomLog /var/log/apache2/{{deploy.prod.web.host}}-access.log combined
 
   RewriteEngine On
-  RewriteLog ${APACHE_LOG_DIR}/{{deploy.prod.web.host}}-rewrite.log
+  RewriteLog /var/log/apache2/{{deploy.prod.web.host}}-rewrite.log
   RewriteLogLevel 0
 
 </VirtualHost>
