@@ -87,7 +87,7 @@ namespace :wp do
         wp.theme.symlink
 
         shared_files = Dir.chdir("src") do
-            Dir.glob("**/*").reject { |f| File.directory?(f) }
+            Dir.glob("**/*").reject { |f| File.directory?(f) || f[application]}
         end
 
         pretty_print "Symlinking project resources into WordPress"
