@@ -44,19 +44,20 @@ before "deploy:update_code" do
   end
 end
 
-after "deploy:update" do
-    pretty_print "Finishing \"#{stage}\" deployment"
+after "deploy:finalize_update" do
+    pretty_print "Loading WordPress Skeleton"
+    run "cd #{latest_release} && #{try_sudo} ./skeleton"
     puts_ok
 end
 
 after "deploy:finalize_update", "wp:symlink"
+
 after "deploy:update",          "wp:plugins:install"
 after "deploy:update",          "wp:theme:activate"
 after "deploy:update",          "deploy:vhost"
 
-after "deploy:finalize_update" do
-    pretty_print "Loading WordPress Skeleton"
-    run "cd #{latest_release} && #{try_sudo} ./skeleton"
+after "deploy:update" do
+    pretty_print "Finishing \"#{stage}\" deployment"
     puts_ok
 end
 
