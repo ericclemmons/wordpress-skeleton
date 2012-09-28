@@ -6,47 +6,55 @@ use Skeleton\Skeleton;
 use Skeleton\SkeletonAwareInterface;
 use Symfony\Component\Console\Application;
 
-if (!file_exists(__DIR__.'/vendor/autoload.php')) {
-    echo "Slow down there, buddy!  We have to install Composer & some ruby gems first!\n";
 
-    $gemPath = trim(`which gem`);
+// Check the status of the skeleton
+$gemPath    = trim(`which gem`);
+$isRefresh  = isset($_SERVER['argv'][1]) && ('refresh' === $_SERVER['argv'][1]);
+$isNew      = !file_exists(__DIR__.'/vendor/autoload.php');
 
-    if (empty($gemPath)) {
-        throw new \Exception('You must install rubygems first. (sudo aptitude install rubygems)');
+// Gems are required
+if (empty($gemPath)) {
+    throw new \Exception('You must install rubygems first. (sudo aptitude install rubygems)');
 
-        return 1;
-    }
+    return 1;
+}
 
-    $interpreter    = 'php -d detect_unicode=Off';
-    $commands       = array(
-        sprintf('curl -s http://getcomposer.org/installer | %s -- %s', $interpreter, __DIR__)   => @!file_exists(__DIR__.'/composer.phar'),
-        sprintf('%s %s/composer.phar install --dev', $interpreter, __DIR__)                     => true,
-        'sudo gem install --no-ri --no-rdoc vagrant-hostmaster'                                 => @!filter_var(`gem list vagrant-hostmaster -i`, FILTER_VALIDATE_BOOLEAN),
-        'sudo gem install --no-ri --no-rdoc capistrano'                                         => @!filter_var(`gem list capistrano -i`, FILTER_VALIDATE_BOOLEAN),
-        'sudo gem install --no-ri --no-rdoc capistrano-ext'                                     => @!filter_var(`gem list capistrano-ext -i`, FILTER_VALIDATE_BOOLEAN),
-        'sudo gem install --no-ri --no-rdoc colored'                                            => @!filter_var(`gem list colored -i`, FILTER_VALIDATE_BOOLEAN),
-    );
+// Phar files have issues with detect_unicode on
+$interpreter    = 'php -d detect_unicode=Off';
 
-    foreach ($commands as $command => $install) {
-        if ($install) {
-            passthru($command, $error);
+// Dependencies
+$commands       = array(
+    sprintf('curl -s http://getcomposer.org/installer | %s -- %s', $interpreter, __DIR__)   => @!file_exists(__DIR__.'/composer.phar'),
+    sprintf('%s %s/composer.phar install --dev', $interpreter, __DIR__)                     => $isNew || $isRefresh,
+    'sudo gem install --no-ri --no-rdoc vagrant-hostmaster'                                 => @!filter_var(`gem list vagrant-hostmaster -i`, FILTER_VALIDATE_BOOLEAN),
+    'sudo gem install --no-ri --no-rdoc capistrano'                                         => @!filter_var(`gem list capistrano -i`, FILTER_VALIDATE_BOOLEAN),
+    'sudo gem install --no-ri --no-rdoc capistrano-ext'                                     => @!filter_var(`gem list capistrano-ext -i`, FILTER_VALIDATE_BOOLEAN),
+    'sudo gem install --no-ri --no-rdoc colored'                                            => @!filter_var(`gem list colored -i`, FILTER_VALIDATE_BOOLEAN),
+);
 
-            if ($error) {
-                throw new \Exception(sprintf('"%s" failed: [%s]', $command, $error));
+// Install dependencies
+foreach ($commands as $command => $install) {
+    if ($install) {
+        passthru($command, $error);
 
-                return 1;
-            }
+        if ($error) {
+            throw new \Exception(sprintf('"%s" failed: [%s]', $command, $error));
+
+            return 1;
         }
     }
 }
 
+// Load Composer autoloader
 require __DIR__.'/vendor/autoload.php';
 
+// Start the skeleton!
 $console    = new Application('WordPress Skeleton', '0.1');
 $skeleton   = new Skeleton(__DIR__.'/config/skeleton.yml');
 $commands   = array(
     new Command\ConfigureSkeletonCommand('configure'),
     new Command\GenerateSkeletonCommand('generate'),
+    new Command\GenerateSkeletonCommand('refresh'),
     new Command\InfoSkeletonCommand('info'),
     new Command\OpenSkeletonCommand('open'),
     new Command\BackupDatabaseWordPressCommand('wp:db:backup'),
