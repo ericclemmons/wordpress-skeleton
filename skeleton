@@ -6,10 +6,9 @@ use Skeleton\Skeleton;
 use Skeleton\SkeletonAwareInterface;
 use Symfony\Component\Console\Application;
 
-
 // Check the status of the skeleton
 $gemPath    = trim(`which gem`);
-$isRefresh  = isset($_SERVER['argv'][1]) && ('refresh' === $_SERVER['argv'][1]);
+$isReset    = isset($_SERVER['argv'][1]) && ('reset' === $_SERVER['argv'][1]);
 $isNew      = !file_exists(__DIR__.'/vendor/autoload.php');
 
 // Gems are required
@@ -19,13 +18,18 @@ if (empty($gemPath)) {
     return 1;
 }
 
+// Remove existing vendors
+if ($isReset) {
+    passthru(sprintf('rm -rf %s/vendor', __DIR__));
+}
+
 // Phar files have issues with detect_unicode on
 $interpreter    = 'php -d detect_unicode=Off';
 
 // Dependencies
 $commands       = array(
-    sprintf('curl -s http://getcomposer.org/installer | %s -- %s', $interpreter, __DIR__)   => @!file_exists(__DIR__.'/composer.phar'),
-    sprintf('%s %s/composer.phar install --dev', $interpreter, __DIR__)                     => $isNew || $isRefresh,
+    sprintf('curl -s http://getcomposer.org/installer | %s -- %s', $interpreter, __DIR__)   => $isNew,
+    sprintf('%s %s/composer.phar install --dev', $interpreter, __DIR__)                     => $isNew || $isReset,
     'sudo gem install --no-ri --no-rdoc vagrant-hostmaster'                                 => @!filter_var(`gem list vagrant-hostmaster -i`, FILTER_VALIDATE_BOOLEAN),
     'sudo gem install --no-ri --no-rdoc capistrano'                                         => @!filter_var(`gem list capistrano -i`, FILTER_VALIDATE_BOOLEAN),
     'sudo gem install --no-ri --no-rdoc capistrano-ext'                                     => @!filter_var(`gem list capistrano-ext -i`, FILTER_VALIDATE_BOOLEAN),
@@ -45,6 +49,11 @@ foreach ($commands as $command => $install) {
     }
 }
 
+// Skip the rest of the console
+if ($isReset) {
+    return 0;
+}
+
 // Load Composer autoloader
 require __DIR__.'/vendor/autoload.php';
 
@@ -54,7 +63,6 @@ $skeleton   = new Skeleton(__DIR__.'/config/skeleton.yml');
 $commands   = array(
     new Command\ConfigureSkeletonCommand('configure'),
     new Command\GenerateSkeletonCommand('generate'),
-    new Command\GenerateSkeletonCommand('refresh'),
     new Command\InfoSkeletonCommand('info'),
     new Command\OpenSkeletonCommand('open'),
     new Command\BackupDatabaseWordPressCommand('wp:db:backup'),
