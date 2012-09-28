@@ -67,6 +67,15 @@ You can view your skeleton's configuration at anytime by viewing `config/skeleto
     > ./skeleton info
 
 
+Refreshing the Skeleton
+-----------------------
+
+If you ever update the core skeleton or make changes to any of its dependencies,
+it may be wise to refresh the skeleton core and your configuration:
+
+    > ./skeleton refresh
+
+
 Local Development
 -----------------
 
