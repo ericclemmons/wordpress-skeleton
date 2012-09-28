@@ -8,6 +8,8 @@ set :password,              "{{deploy.local.web.password}}"
 # Disable shared children since we're symlinking to a real location
 set :shared_children,       []
 
+default_environment['PATH'] = "$PATH:/opt/vagrant_ruby/bin"
+
 namespace :deploy do
     task :update_code, :except => { :no_release => true } do
         on_rollback { run "rm -rf #{release_path}; true" }
