@@ -1,11 +1,16 @@
 {
-    "hash": "a4acccbf785d1d7243a83b8a902c23b5",
+    "hash": "8c7e864584e4c69447a4dc1ca687865c",
     "packages": [
         {
-            "package": "wordpress/wordpress",
-            "version": "master",
-            "source-reference": "master",
-            "commit-date": "1348149579"
+            "name": "wordpress/wordpress",
+            "version": "3.4.2",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/WordPress/WordPress.git",
+                "reference": "3.4.2"
+            },
+            "type": "library",
+            "installation-source": "source"
         }
     ],
     "packages-dev": null,
@@ -14,7 +19,6 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "wordpress/wordpress": 20,
         "automattic/_s": 20,
         "cookbooks/apache2": 20,
         "cookbooks/apt": 20,

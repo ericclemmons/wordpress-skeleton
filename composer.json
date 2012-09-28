@@ -18,7 +18,7 @@
 
     "require": {
         "php":                      ">=5.3.3",
-        "wordpress/wordpress":      "dev-master"
+        "wordpress/wordpress":      "3.4.2"
     },
 
     "require-dev": {
@@ -144,11 +144,11 @@
             "type":                 "package",
             "package": {
                 "name":             "wordpress/wordpress",
-                "version":          "master",
+                "version":          "3.4.2",
                 "source": {
                     "url":          "git://github.com/WordPress/WordPress.git",
                     "type":         "git",
-                    "reference":    "master"
+                    "reference":    "3.4.2"
                 }
             }
         }
