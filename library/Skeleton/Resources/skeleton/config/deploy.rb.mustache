@@ -1,4 +1,12 @@
-require "capistrano/ext/multistage"
+begin
+    require "capistrano"
+    require "capistrano/ext/multistage"
+    require "colored"
+rescue LoadError
+  puts "You need to run: $ sudo gem install capifony capistrano-ext colored"
+  exit
+end
+
 
 set :stage_dir,         "deploy"
 

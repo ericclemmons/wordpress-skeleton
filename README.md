@@ -18,7 +18,17 @@ Features
 Dependencies
 ------------
 
+You will need to install Vagrant and some Ruby Gems for both local development
+and deployment to work correctly.
+
 * Download & Install [Vagrant][1]
+* Install [Vagrant Hostmaster][6]
+
+  > sudo gem install vagrant-hostmaster
+
+* Capistrano
+
+  > sudo gem install capistrano capistrano-ext colored
 
 
 Starting a New Theme
