@@ -24,6 +24,7 @@ if (!file_exists(__DIR__.'/vendor/autoload.php')) {
         'sudo gem install --no-ri --no-rdoc vagrant-hostmaster'                                 => @!filter_var(`gem list vagrant-hostmaster -i`, FILTER_VALIDATE_BOOLEAN),
         'sudo gem install --no-ri --no-rdoc capistrano'                                         => @!filter_var(`gem list capistrano -i`, FILTER_VALIDATE_BOOLEAN),
         'sudo gem install --no-ri --no-rdoc capistrano-ext'                                     => @!filter_var(`gem list capistrano-ext -i`, FILTER_VALIDATE_BOOLEAN),
+        'sudo gem install --no-ri --no-rdoc colored'                                            => @!filter_var(`gem list colored -i`, FILTER_VALIDATE_BOOLEAN),
     );
 
     foreach ($commands as $command => $install) {
