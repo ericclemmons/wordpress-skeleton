@@ -15,94 +15,76 @@ Features
 * Simplified theme development via [_s][3] and the WordPress [Theme Unit Test][8]
 
 
-Dependencies
+Installation
 ------------
 
+[Vagrant][1] manages your local VM, while [Capistrano][4] handles all deployment-related
+tasks.  The library itself uses [Composer][2] to handle tool-related dependencies.
 You will need to install Vagrant and some Ruby Gems for both local development
 and deployment to work correctly.
 
 * Download & Install [Vagrant][1]
 * Install [Vagrant Hostmaster][6]
 
-  > sudo gem install vagrant-hostmaster
+    $ sudo gem install vagrant-hostmaster
 
 * Capistrano
 
-  > sudo gem install capistrano capistrano-ext colored
+    $ sudo gem install capistrano capistrano-ext colored
+
+* [Composer][2] & depependencies
+
+For a brand new theme:
+
+    $ cd path/to/sites
+    $ git clone git://github.com/ericclemmons/wordpress-skeleton.git my-theme
+
+...Or an existing theme:
+
+    $ cd path/to/existing/theme
+    $ git remote add skeleton git://github.com/ericclemmons/wordpress-skeleton.git
+    $ git fetch skeleton && git merge --squash skeleton/master
+
+Now, install the final dependencies:
+
+    $ curl -s https://getcomposer.org/installer | php
+    $ php composer.phar install
 
 
-Starting a New Theme
---------------------
+Configure your `skeleton.yml`
+-----------------------------
 
-    > cd path/to/sites
-    > git://github.com/ericclemmons/wordpress-skeleton.git
-    > cd wordpress-skeleton
+This is where all WordPress plugins, admin logins & server information is stored.
 
-
-Using an Existing Theme
------------------------
-
-    > cd path/to/existing/site
-    > mv path/to/wp-content/themes/mytheme src
-    > git remote add skeleton git://github.com/ericclemmons/wordpress-skeleton.git
-    > git fetch skeleton && git merge --squash skeleton/master
-
-This will give you the chance to resolve any conflicts in `.gitignore` or `README.md`.
-
-Finally, you can commit your changes with something like:
-
-    > git commit -m 'Migrated theme to WordPress Skeleton'
+    $ ./bin/skeleton configure
 
 
-Setting Up Your Skeleton
-------------------------
+(Re)Generating Your WordPress Skeleton
+--------------------------------------
 
-    > ./skeleton configure
+This is done automatically whenever you configure your `skeleton.yml`, but should
+be ran if you make any changes to it manually:
 
-
-Saving Your Skeleton
---------------------
-
-    > git add Vagrantfile config src
-    > git commit -m "Initial Skeleton commit"
-
-- `Vagrantfile` defines your local VM's settings.
-- `config/` contains deployment scripts and `skeleton.yml`, which stores your options
-  for regenerating your skeleton from scratch, should you need to.
-- `src/` houses your theme folder and is linked & activated within WordPress upon
-  deployment.
-
-You can view your skeleton's configuration at anytime by viewing `config/skeleton.yml` or running
-
-    > ./skeleton info
-
-
-Resetting the Skeleton Core
----------------------------
-
-If you ever update the core `./skeleton` or make changes to any of its dependencies
-in `/vendor`, it may be wise to reset the skeleton core back to when it was installed:
-
-    > ./skeleton reset
+    $ ./bin/skeleton generate
 
 
 Local Development
 -----------------
 
-    > vagrant up
+    $ vagrant up
 
 The first time you run this, you have to perform a `cold` deployment to setup
 the folder structure & database:
 
-    > cap local deploy:cold
+    $ cap local deploy:cold
 
 After doing it once, you can just do normal deployments, which will only update the theme:
 
-    > cap local deploy
+    $ cap local deploy
 
 Open WordPress in your browser:
 
-    > ./skeleton open
+    $ ./skeleton open
 
 Now you can make changes to `/src` and refresh!
 

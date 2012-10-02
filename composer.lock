@@ -1,16 +1,225 @@
 {
-    "hash": "8c7e864584e4c69447a4dc1ca687865c",
+    "hash": "266ecdba57ccd2dfd0f6d60a62bee381",
     "packages": [
+        {
+            "name": "automattic/_s",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/Automattic/_s.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "installation-source": "source",
+            "time": "1347585704"
+        },
+        {
+            "name": "ericclemmons/wordpress-generator",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/ericclemmons/wordpress-generator.git",
+                "reference": "a6b6b451abe3b1e02e6d43dfb2576569e5308e85"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/ericclemmons/wordpress-generator/zipball/a6b6b451abe3b1e02e6d43dfb2576569e5308e85",
+                "reference": "a6b6b451abe3b1e02e6d43dfb2576569e5308e85",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "symfony/console": "2.1.*",
+                "symfony/yaml": "2.1.*"
+            },
+            "time": "1349145695",
+            "bin": [
+                "bin/skeleton"
+            ],
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Skeleton": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Eric Clemmons",
+                    "email": "eric@smarterspam.com"
+                }
+            ],
+            "description": "Interactive WordPress, Skeleton & Capistrano configuration generator",
+            "support": {
+                "source": "https://github.com/ericclemmons/wordpress-generator/tree/master",
+                "issues": "https://github.com/ericclemmons/wordpress-generator/issues"
+            }
+        },
+        {
+            "name": "opscode-cookbooks/apache2",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/opscode-cookbooks/apache2.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "installation-source": "source",
+            "time": "1347664077"
+        },
+        {
+            "name": "opscode-cookbooks/apt",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/opscode-cookbooks/apt.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "installation-source": "source",
+            "time": "1348697955"
+        },
+        {
+            "name": "opscode-cookbooks/mysql",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/opscode-cookbooks/mysql.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "installation-source": "source",
+            "time": "1348814343"
+        },
+        {
+            "name": "opscode-cookbooks/openssl",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/opscode-cookbooks/openssl.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "installation-source": "source",
+            "time": "1331206930"
+        },
+        {
+            "name": "opscode-cookbooks/php",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/opscode-cookbooks/php.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "installation-source": "source",
+            "time": "1346384264"
+        },
+        {
+            "name": "symfony/console",
+            "version": "v2.1.2",
+            "target-dir": "Symfony/Component/Console",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Console",
+                "reference": "v2.1.0-RC2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/symfony/Console/zipball/v2.1.0-RC2",
+                "reference": "v2.1.0-RC2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "time": "2012-08-22 13:48:41",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Console": ""
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Console Component",
+            "homepage": "http://symfony.com"
+        },
+        {
+            "name": "symfony/yaml",
+            "version": "v2.1.2",
+            "target-dir": "Symfony/Component/Yaml",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Yaml",
+                "reference": "v2.1.0-RC2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/symfony/Yaml/zipball/v2.1.0-RC2",
+                "reference": "v2.1.0-RC2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "time": "2012-08-22 13:48:41",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Yaml": ""
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Yaml Component",
+            "homepage": "http://symfony.com"
+        },
         {
             "name": "wordpress/wordpress",
             "version": "3.4.2",
-            "source": {
-                "type": "git",
-                "url": "git://github.com/WordPress/WordPress.git",
-                "reference": "3.4.2"
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/WordPress/WordPress/zipball/3.4.2",
+                "reference": null,
+                "shasum": null
             },
             "type": "library",
-            "installation-source": "source"
+            "installation-source": "dist"
         }
     ],
     "packages-dev": null,
@@ -20,12 +229,11 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "automattic/_s": 20,
-        "cookbooks/apache2": 20,
-        "cookbooks/apt": 20,
-        "cookbooks/mysql": 20,
-        "cookbooks/openssl": 20,
-        "cookbooks/php": 20,
-        "symfony/console": 20,
-        "symfony/yaml": 20
+        "ericclemmons/wordpress-generator": 20,
+        "opscode-cookbooks/apache2": 20,
+        "opscode-cookbooks/apt": 20,
+        "opscode-cookbooks/mysql": 20,
+        "opscode-cookbooks/openssl": 20,
+        "opscode-cookbooks/php": 20
     }
 }

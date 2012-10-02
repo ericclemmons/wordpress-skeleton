@@ -10,32 +10,23 @@
         }
     ],
 
-    "autoload": {
-        "psr-0": {
-            "Skeleton":             "library/"
-        }
-    },
-
     "require": {
-        "php":                      ">=5.3.3",
-        "wordpress/wordpress":      "3.4.2"
+        "php":                              ">=5.3.3",
+        "automattic/_s":                    "dev-master",
+        "ericclemmons/wordpress-generator": "dev-master",
+        "opscode-cookbooks/apache2":        "dev-master",
+        "opscode-cookbooks/apt":            "dev-master",
+        "opscode-cookbooks/mysql":          "dev-master",
+        "opscode-cookbooks/openssl":        "dev-master",
+        "opscode-cookbooks/php":            "dev-master",
+        "wordpress/wordpress":              "3.4.2"
     },
 
-    "require-dev": {
-        "automattic/_s":            "dev-master",
-        "cookbooks/apache2":        "dev-master",
-        "cookbooks/apt":            "dev-master",
-        "cookbooks/mysql":          "dev-master",
-        "cookbooks/openssl":        "dev-master",
-        "cookbooks/php":            "dev-master",
-        "symfony/console":          "dev-master",
-        "symfony/yaml":             "dev-master"
+    "config": {
+        "bin-dir":                          "bin"
     },
 
     "repositories": [
-        {
-            "packagist":            false
-        },
         {
             "type":                 "package",
             "package": {
@@ -49,9 +40,13 @@
             }
         },
         {
+            "type":                 "vcs",
+            "url":                  "git://github.com/ericclemmons/wordpress-generator.git"
+        },
+        {
             "type":                 "package",
             "package": {
-                "name":             "cookbooks/apache2",
+                "name":             "opscode-cookbooks/apache2",
                 "version":          "master",
                 "source": {
                     "url":          "git://github.com/opscode-cookbooks/apache2.git",
@@ -63,7 +58,7 @@
         {
             "type":                 "package",
             "package": {
-                "name":             "cookbooks/apt",
+                "name":             "opscode-cookbooks/apt",
                 "version":          "master",
                 "source": {
                     "url":          "git://github.com/opscode-cookbooks/apt.git",
@@ -75,7 +70,7 @@
         {
             "type":                 "package",
             "package": {
-                "name":             "cookbooks/mysql",
+                "name":             "opscode-cookbooks/mysql",
                 "version":          "master",
                 "source": {
                     "url":          "git://github.com/opscode-cookbooks/mysql.git",
@@ -87,7 +82,7 @@
         {
             "type":                 "package",
             "package": {
-                "name":             "cookbooks/openssl",
+                "name":             "opscode-cookbooks/openssl",
                 "version":          "master",
                 "source": {
                     "url":          "git://github.com/opscode-cookbooks/openssl.git",
@@ -99,7 +94,7 @@
         {
             "type":                 "package",
             "package": {
-                "name":             "cookbooks/php",
+                "name":             "opscode-cookbooks/php",
                 "version":          "master",
                 "source": {
                     "url":          "git://github.com/opscode-cookbooks/php.git",
@@ -111,44 +106,11 @@
         {
             "type":                 "package",
             "package": {
-                "name":             "symfony/console",
-                "version":          "master",
-                "source": {
-                    "url":          "git://github.com/symfony/Console.git",
-                    "type":         "git",
-                    "reference":    "master"
-                },
-                "target-dir":       "Symfony/Component/Console",
-                "autoload": {
-                    "psr-0":        { "Symfony\\Component\\Console": "" }
-                }
-            }
-        },
-        {
-            "type":                 "package",
-            "package": {
-                "name":             "symfony/yaml",
-                "version":          "master",
-                "source": {
-                    "url":          "git://github.com/symfony/Yaml.git",
-                    "type":         "git",
-                    "reference":    "master"
-                },
-                "target-dir":       "Symfony/Component/Yaml",
-                "autoload": {
-                    "psr-0":        { "Symfony\\Component\\Yaml": "" }
-                }
-            }
-        },
-        {
-            "type":                 "package",
-            "package": {
                 "name":             "wordpress/wordpress",
                 "version":          "3.4.2",
-                "source": {
-                    "url":          "git://github.com/WordPress/WordPress.git",
-                    "type":         "git",
-                    "reference":    "3.4.2"
+                "dist":             {
+                    "type":         "zip",
+                    "url":          "https://github.com/WordPress/WordPress/zipball/3.4.2"
                 }
             }
         }
