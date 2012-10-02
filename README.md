@@ -18,37 +18,23 @@ Features
 Installation
 ------------
 
-[Vagrant][1] manages your local VM, while [Capistrano][4] handles all deployment-related
-tasks.  The library itself uses [Composer][2] to handle tool-related dependencies.
-You will need to install Vagrant and some Ruby Gems for both local development
-and deployment to work correctly.
-
-* Download & Install [Vagrant][1]
-* Install [Vagrant Hostmaster][6]
-
-    $ sudo gem install vagrant-hostmaster
-
-* Capistrano
-
-    $ sudo gem install capistrano capistrano-ext colored
-
-* [Composer][2] & depependencies
-
-For a brand new theme:
+**Creating a New Theme**:
 
     $ cd path/to/sites
     $ git clone git://github.com/ericclemmons/wordpress-skeleton.git my-theme
 
-...Or an existing theme:
+**Adding to an Existing Theme**:
 
     $ cd path/to/existing/theme
     $ git remote add skeleton git://github.com/ericclemmons/wordpress-skeleton.git
     $ git fetch skeleton && git merge --squash skeleton/master
 
-Now, install the final dependencies:
 
-    $ curl -s https://getcomposer.org/installer | php
-    $ php composer.phar install
+* Download & Install [Vagrant][1]
+* Install [Vagrant Hostmaster][6]: `$ sudo gem install vagrant-hostmaster`
+* Capistrano: `$ sudo gem install capistrano capistrano-ext colored`
+* [Composer][2]: `$ curl -s https://getcomposer.org/installer | php`
+* Composer depependencies: `$ php composer.phar install`
 
 
 Configure your `skeleton.yml`
