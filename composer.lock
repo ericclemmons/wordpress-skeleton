@@ -9,9 +9,9 @@
                 "url": "git://github.com/Automattic/_s.git",
                 "reference": "master"
             },
+            "time": "1347585704",
             "type": "library",
-            "installation-source": "source",
-            "time": "1347585704"
+            "installation-source": "source"
         },
         {
             "name": "ericclemmons/wordpress-generator",
@@ -19,12 +19,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/ericclemmons/wordpress-generator.git",
-                "reference": "2f4a3786d107e3f4ace52b3b460356f841716bb7"
+                "reference": "8fc7a038b108614247a52364fae5b6c95d6320c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/ericclemmons/wordpress-generator/zipball/2f4a3786d107e3f4ace52b3b460356f841716bb7",
-                "reference": "2f4a3786d107e3f4ace52b3b460356f841716bb7",
+                "url": "https://github.com/ericclemmons/wordpress-generator/zipball/8fc7a038b108614247a52364fae5b6c95d6320c9",
+                "reference": "8fc7a038b108614247a52364fae5b6c95d6320c9",
                 "shasum": ""
             },
             "require": {
@@ -32,7 +32,7 @@
                 "symfony/console": "2.1.*",
                 "symfony/yaml": "2.1.*"
             },
-            "time": "1349362147",
+            "time": "1349368910",
             "bin": [
                 "bin/skeleton"
             ],
@@ -111,9 +111,9 @@
                 "url": "git://github.com/opscode-cookbooks/php.git",
                 "reference": "master"
             },
+            "time": "1346384264",
             "type": "library",
-            "installation-source": "source",
-            "time": "1346384264"
+            "installation-source": "source"
         },
         {
             "name": "symfony/console",
