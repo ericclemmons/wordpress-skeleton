@@ -19,12 +19,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/ericclemmons/wordpress-generator.git",
-                "reference": "8fc7a038b108614247a52364fae5b6c95d6320c9"
+                "reference": "9212ab2169e83b561ecfabf5b77235873a02aca6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/ericclemmons/wordpress-generator/zipball/8fc7a038b108614247a52364fae5b6c95d6320c9",
-                "reference": "8fc7a038b108614247a52364fae5b6c95d6320c9",
+                "url": "https://github.com/ericclemmons/wordpress-generator/zipball/9212ab2169e83b561ecfabf5b77235873a02aca6",
+                "reference": "9212ab2169e83b561ecfabf5b77235873a02aca6",
                 "shasum": ""
             },
             "require": {
@@ -32,7 +32,7 @@
                 "symfony/console": "2.1.*",
                 "symfony/yaml": "2.1.*"
             },
-            "time": "1349368910",
+            "time": "1349448193",
             "bin": [
                 "bin/skeleton"
             ],
