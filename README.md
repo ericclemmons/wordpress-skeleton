@@ -1,5 +1,7 @@
-WordPress Skeleton
-==================
+[DEPRECATED] WordPress Skeleton
+===============================
+
+**USE https://github.com/genesis/wordpress/ INSTEAD! IT ROCKS!**
 
 Opinionated WordPress starter template that sets up local development
 & remote deployment via a simple configuration & command-line tools.
